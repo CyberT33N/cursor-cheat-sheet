@@ -27,4 +27,4 @@ ngrok http 11434 --host-header="localhost:11434"
 
 3. Open Cursor > Cursor Settings > Models
   3.1 Disable all other models and add new model which has the same name as your hosted llm in ollama in my case
-  3.2. At section OpenAI API Key add your base url `https://xxxxxxxxxxxxx.ngrok-free.app/v1`. And then you must add a valid Open AI API Key
+  3.2. At section OpenAI API Key add your base url `https://xxxxxxxxxxxxx.ngrok-free.app/v1`. And then click verify
