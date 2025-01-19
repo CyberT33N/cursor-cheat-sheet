@@ -88,7 +88,7 @@ ollama run deepseek-v2-coder-lite
 3. Start custom proxy layer to enhance security with ngrok
 - https://github.com/CyberT33N/proxy-auth
 - Make sure to define a bearer token in the .env file. The value of this will be the API key which you enter in cursor later..
-
+- Related to point 5. there is a verify button in cursor which will send a OPTIONS method request without baerer token. In the project is a condition for this commented out. You can enable it to 1x time allow the request that cursor is happy and then you can commit it out again and restart. This only has to be done once..
 
 <br><br>
 
