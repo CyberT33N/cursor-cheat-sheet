@@ -99,7 +99,7 @@ ngrok http 11434 --host-header="localhost:11434"
 
 4. Open Cursor > Cursor Settings > Models
   3.1 Disable all other models and add new model which has the same name as your hosted llm in ollama in my case `deepseek-v2-coder-lite`
-  3.2 At section OpenAI API Key add your base url `https://xxxxxxxxxxxxx.ngrok-free.app/v1`. Add any random API Key And then click verify button
+  3.2 At section OpenAI API Key add your base url `https://xxxxxxxxxxxxx.ngrok-free.app/v1`. Add any random API Key (Or maybe add valid OpenAI Key but do not think this is necessary) And then click verify button
    - If you get 403 then something is not working with CORS.
 
 <br><br>
