@@ -1,6 +1,51 @@
 # Cursor Cheat Sheet
 
 
+# Install
+```shell
+./cursor-0.44.11x86_64.AppImage --appimage-extract
+
+sudo chown root:root squashfs-root/chrome-sandbox
+sudo chmod 4755 squashfs-root/chrome-sandbox
+
+./squashfs-root/AppRun
+```
+
+
+
+<br><br>
+<br><br>
+
+# Uninstall
+
+## Ubuntu
+```shell
+rm -rf ~/.cursor ~/.config/Cursor/
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___
+<br><br>
+<br><br>
+
+
 
 # Models
 
