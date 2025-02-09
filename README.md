@@ -3,7 +3,8 @@
 
 # Install
 ```shell
-./cursor-0.44.11x86_64.AppImage --appimage-extract
+sudo chmod +x ./cursor-0.45.11x86_64.AppImage
+./cursor-0.45.11x86_64.AppImage --appimage-extract
 
 sudo chown root:root squashfs-root/chrome-sandbox
 sudo chmod 4755 squashfs-root/chrome-sandbox
