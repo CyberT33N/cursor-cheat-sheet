@@ -50,13 +50,30 @@ ___
 
 # Models
 
+
+## Ranking
+1. 03-mini
+2. claude-3.5-sonnet
+3. gpt-4o
+
+
+
+
+
+
+
+
+<br><br>
 <br><br>
 
 ## Use local model
 
-<br><br>
 
-### Ollama
+<details><summary>Click to expand..</summary>
+
+
+
+# Ollama
 
 
 1. Allow Web Origins in Ollama. Will be needed for Cursor to send the request to ngrok to your ollama
@@ -109,3 +126,6 @@ ngrok http 3000 --host-header="localhost:3000"
 <br><br>
 
 6. Enjoy <3
+
+</details>
+
