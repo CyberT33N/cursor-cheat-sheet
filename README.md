@@ -129,3 +129,54 @@ ngrok http 3000 --host-header="localhost:3000"
 
 </details>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Good 2 Know
+
+
+
+<br><br>
+<br><br>
+___
+<br><br>
+<br><br>
+
+
+
+
+<details><summary>Click to expand..</summary>
+
+
+# Structure
+- keep files small and create a new file for new components
+
+  
+</details>
+
+
+
+
+
