@@ -1,16 +1,57 @@
 # Cursor Cheat Sheet
 
 
-# Install
-```shell
-sudo chmod +x ./cursor-0.45.11x86_64.AppImage
-./cursor-0.45.11x86_64.AppImage --appimage-extract
+# Install/Update
 
+Default
+```shell
+#!/bin/bash
+
+# Wechsel in das Verzeichnis, in dem sich das Skript befindet
+cd "$(dirname "$0")"
+
+# Finde die AppImage-Datei im aktuellen Verzeichnis
+APPIMAGE=$(ls | grep -E '^cursor-[0-9.]+(-build-[a-zA-Z0-9]+)?-x86_64\.AppImage$' | head -n 1)
+
+# Prüfe, ob eine Datei gefunden wurde
+if [ -z "$APPIMAGE" ]; then
+    echo "Keine passende AppImage-Datei gefunden."
+    exit 1
+fi
+
+echo "Gefundene AppImage-Datei: $APPIMAGE"
+
+# Falls ein alter squashfs-root-Ordner existiert, lösche ihn
+if [ -d "squashfs-root" ]; then
+    echo "Alter Ordner squashfs-root gefunden. Lösche ihn..."
+    rm -rf squashfs-root
+fi
+
+# Setze Ausführungsrechte
+sudo chmod +x "$APPIMAGE"
+
+# Extrahiere das AppImage
+"./$APPIMAGE" --appimage-extract
+
+# Setze korrekte Rechte für chrome-sandbox
 sudo chown root:root squashfs-root/chrome-sandbox
 sudo chmod 4755 squashfs-root/chrome-sandbox
 
+# Starte die extrahierte Anwendung
 ./squashfs-root/AppRun
+
 ```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
