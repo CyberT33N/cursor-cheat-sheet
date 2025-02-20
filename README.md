@@ -3,8 +3,8 @@
 
 # Install/Update
 
-Default
-```shell
+
+```bash
 #!/bin/bash
 
 # Wechsel in das Verzeichnis, in dem sich das Skript befindet
