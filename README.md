@@ -109,6 +109,9 @@ ___
 
 ## Use local model
 
+## Open Threads
+- https://github.com/getcursor/cursor/issues/1380#issuecomment-2717102371
+
 
 <details><summary>Click to expand..</summary>
 
