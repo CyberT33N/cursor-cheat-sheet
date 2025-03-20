@@ -33,13 +33,31 @@ sudo chmod +x "$APPIMAGE"
 # Extrahiere das AppImage
 "./$APPIMAGE" --appimage-extract
 
+# Prüfe den tatsächlichen Pfad der chrome-sandbox Datei
+SANDBOX_PATH=""
+if [ -f "squashfs-root/chrome-sandbox" ]; then
+    SANDBOX_PATH="squashfs-root/chrome-sandbox"
+elif [ -f "squashfs-root/usr/share/cursor/chrome-sandbox" ]; then
+    SANDBOX_PATH="squashfs-root/usr/share/cursor/chrome-sandbox"
+fi
+
 # Setze korrekte Rechte für chrome-sandbox
-sudo chown root:root squashfs-root/chrome-sandbox
-sudo chmod 4755 squashfs-root/chrome-sandbox
+if [ -n "$SANDBOX_PATH" ]; then
+    echo "Chrome-Sandbox gefunden unter: $SANDBOX_PATH"
+    sudo chown root:root "$SANDBOX_PATH"
+    sudo chmod 4755 "$SANDBOX_PATH"
+else
+    echo "WARNUNG: Chrome-Sandbox nicht gefunden. Die Anwendung könnte nicht richtig funktionieren."
+    # Suche nach möglichen Pfaden
+    find squashfs-root -name "chrome-sandbox" | while read -r path; do
+        echo "Möglicher Sandbox-Pfad gefunden: $path"
+        sudo chown root:root "$path"
+        sudo chmod 4755 "$path"
+    done
+fi
 
 # Starte die extrahierte Anwendung
 ./squashfs-root/AppRun
-
 ```
 
 
