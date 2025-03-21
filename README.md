@@ -224,18 +224,23 @@ ___
 
 
 
-# Rules for AI
+# Rules
 
 
 
 
 <details><summary>Click to expand..</summary>
 
-Learn how to customize AI behavior in Cursor using project-specific and global rules.  
 
-Using rules in Cursor, you can control the behavior of the underlying model. You can think of it as instructions and/or a system prompt for LLMs.  
+# List
+- https://cursor.directory/rules
 
-Inside Cursor, we have two main ways to customize the behavior of the AI to suit your needs:  
+
+
+
+<br><br>
+<br><br>
+
 
 ### Project Rules  
 
@@ -702,6 +707,20 @@ ___
 
 
 <details><summary>Click to expand..</summary>
+
+
+## Server
+- https://glama.ai/mcp/servers
+- https://smithery.ai/ **HOT**
+- https://cursor.directory/
+- https://www.lmsystems.ai/servers **PAID CLOUD**
+
+
+
+<br><br>
+<br><br>
+
+
 
 
 ## What is MCP?  
