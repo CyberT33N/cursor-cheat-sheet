@@ -13,23 +13,16 @@ This repository contains a comprehensive cheat sheet for using Cursor, the AI-po
    - [Local Models](models/local-models.md)
 
 3. [Rules](rules/index.md)
-   - [Project Rules](rules/project-rules.md)
-   - [Global Rules](rules/global-rules.md)
-   - [.cursorrules File](rules/cursorrules-file.md)
+   - [Rules Documentation](rules/rules.md)
 
 4. [@ Symbols](symbols/index.md)
-   - [Overview](symbols/overview.md)
-   - [Keyboard Shortcuts](symbols/keyboard-shortcuts.md)
-   - [Symbol List](symbols/symbol-list.md)
+   - [@ Symbols Documentation](symbols/symbols.md)
 
 5. [Ignore Files](ignore-files/index.md)
    - [Ignore Files Documentation](ignore-files/ignore-files.md)
 
 6. [Codebase Indexing](indexing/index.md)
-   - [Basics](indexing/basics.md)
-   - [Advanced Settings](indexing/advanced-settings.md)
-   - [Monorepos](indexing/monorepos.md)
-   - [FAQ](indexing/faq.md)
+   - [Codebase Indexing Documentation](indexing/indexing.md)
 
 7. [Model Context Protocol (MCP)](mcp/index.md)
    - [Introduction](mcp/introduction.md)

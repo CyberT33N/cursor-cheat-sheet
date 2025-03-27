@@ -1,4 +1,18 @@
-# List of All @ Symbols
+# @ Symbols in Cursor
+
+## Overview
+
+Overview of all `@` symbols available in Cursor for context and commands.
+
+In Cursor's input boxes, such as **Composer, Chat, and Cmd + K**, you can use `@` symbols by typing `@`. A popup menu will appear with a list of suggestions, automatically filtering to show the most relevant options based on your input.
+
+## Keyboard Shortcuts
+
+- **Navigate** through the list of suggestions using the **up/down arrow keys**.
+- **Select** a suggestion by pressing **Enter**.
+- **IF** the suggestion is a **category** (e.g., `@Files`), the list will refine to show only relevant items within that category.
+
+## List of All @ Symbols
 
 - **`@Files`** - Reference specific files in your project.
 - **`@Folders`** - Reference entire folders for broader context.

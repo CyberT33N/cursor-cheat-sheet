@@ -4,7 +4,4 @@ This section explains how to index your codebase for more accurate AI assistance
 
 ## Contents
 
-- [Basics](basics.md) - How to index your codebase
-- [Advanced Settings](advanced-settings.md) - Customization options for indexing
-- [Monorepos](monorepos.md) - Working with large monorepos
-- [FAQ](faq.md) - Frequently asked questions about codebase indexing 
+- [Codebase Indexing Documentation](indexing.md) - Complete documentation about codebase indexing in Cursor 
