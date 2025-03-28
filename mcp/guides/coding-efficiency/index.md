@@ -1,10 +1,177 @@
 # 🛠️ Working Global Configs
 
-## 🖥️ Windows
 
+## 🖥️ Linux
+
+<details><summary>Click to expand..</summary>
 
 ### Local 
 
+<details><summary>Click to expand..</summary>
+
+```javascript
+
+{
+  "mcpServers": {
+    "exa": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "exa",
+        "--key",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ]
+    },
+    "server-sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@smithery-ai/server-sequential-thinking",
+        "--config",
+        "\"{}\""
+      ]
+    },
+    "browser-tools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentdeskai/browser-tools-mcp"
+      ],
+      "enabled": true
+    },
+    "openrouterai": {
+      "command": "npx",
+      "args": ["@mcpservers/openrouterai"],
+      "env": {
+        "OPENROUTER_API_KEY": "xxxxxxxxxxxxxxxxxx"
+      }
+    }
+  }
+}
+
+
+------------------
+
+
+{
+  "mcpServers": {
+    "server-sequential-thinking": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "mcp/sequentialthinking"
+      ]
+    },
+    "exa": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "exa-labs/exa-mcp-server"
+      ],
+      "env": {
+        "EXA_API_KEY": "xxxxxxxxxxx"
+      }
+    },
+    "openrouterai": {
+      "command": "npx",
+      "args": ["-y", "@mcpservers/openrouterai"],
+      "env": {
+        "OPENROUTER_API_KEY": "sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+    "browser-tools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentdeskai/browser-tools-mcp"
+      ],
+      "enabled": true
+    }
+  }
+}
+```
+
+</details>
+
+
+<br><br>
+
+### Cloud 
+
+
+<details><summary>Click to expand..</summary>
+
+```javascript
+
+{
+  "mcpServers": {
+    "exa": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "exa",
+        "--key",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ]
+    },
+    "server-sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@smithery-ai/server-sequential-thinking",
+        "--config",
+        "\"{}\""
+      ]
+    },
+    "browser-tools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agentdeskai/browser-tools-mcp"
+      ],
+      "enabled": true
+    },
+    "openrouterai": {
+      "command": "npx",
+      "args": ["@mcpservers/openrouterai"],
+      "env": {
+        "OPENROUTER_API_KEY": "xxxxxxxxxxxxxxxxxx"
+      }
+    }
+  }
+}
+
+
+```
+
+</details>
+
+</details>
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+## 🖥️ Windows
+
+<details><summary>Click to expand..</summary>
+  
+### Local 
 
 <details><summary>Click to expand..</summary>
 
@@ -56,7 +223,6 @@
 </details>
 
 
-<br><br>
 <br><br>
 
 ### Cloud 
@@ -114,6 +280,12 @@
 
 </details>
 
+</details>
+
+
+
+
+<br><br>
 
 ---
 
@@ -122,6 +294,8 @@
 - [GitHub Rules](https://github.com/kleosr/cursorkleosr/tree/main/.cursor/rules)
 
 ---
+
+<br><br>
 
 # 🧠 Good to Know
 - **Avoid workspaces**: Open a window for each project because agents may search in the wrong directories.
