@@ -285,7 +285,12 @@
 
 
 
+
+
+
 <br><br>
+<br><br>
+
 
 ---
 
@@ -295,12 +300,20 @@
 
 ---
 
+
 <br><br>
+<br><br>
+
 
 # 🧠 Good to Know
 - **Avoid workspaces**: Open a window for each project because agents may search in the wrong directories.
 
 ---
+
+
+<br><br>
+<br><br>
+
 
 # ❌ Kill All MCP Servers
 
@@ -310,6 +323,14 @@
 # windows
 Get-Process node | ForEach-Object { $_.Kill() }
 ```
+
+
+<br><br>
+<br><br>
+
+# 1. MCP Server
+
+<details><summary>Click to expand..</summary>
 
 ---
 
@@ -774,6 +795,13 @@ npx -y @smithery/cli@latest install @mcpserver/openrouterai --client cursor
 ```
 
 </details>
+
+
+
+<details>
+
+<br><br>
+<br><br>
 
 ---
 
