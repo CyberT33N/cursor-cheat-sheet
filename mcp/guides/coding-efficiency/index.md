@@ -303,6 +303,22 @@
 - [Guide Link](https://forum.cursor.com/t/guide-maximizing-coding-efficiency-with-mcp-sequential-thinking-openrouter-ai/66461)
 - [GitHub Rules](https://github.com/kleosr/cursorkleosr/tree/main/.cursor/rules)
 
+
+---
+
+# Dependencies
+
+## Cursor Settings
+```javascript
+"cursor.general.enableShadowWorkspace": true
+```
+- Or activate in setting area and search for `shadow`
+
+
+<br><br>
+<br><br>
+
+
 ---
 
 
