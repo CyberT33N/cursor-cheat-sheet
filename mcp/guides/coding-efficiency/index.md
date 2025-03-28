@@ -1,6 +1,7 @@
 # 🛠️ Working Global Configs
 
-
+<details><summary>Click to expand..</summary>
+  
 ## 🖥️ Linux
 
 <details><summary>Click to expand..</summary>
@@ -281,6 +282,10 @@
 </details>
 
 </details>
+
+</details>
+
+
 
 
 
