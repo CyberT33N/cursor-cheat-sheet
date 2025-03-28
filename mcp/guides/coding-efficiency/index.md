@@ -2,6 +2,59 @@
 
 ## 🖥️ Windows
 
+
+### Local 
+
+
+<details><summary>Click to expand..</summary>
+
+```javascript
+{
+  "mcpServers": {
+    "server-sequential-thinking": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "mcp/sequentialthinking"
+      ]
+    },
+    "exa": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "exa",
+        "--config",
+        "\"{\\\"exaApiKey\\\":\\\"xxxxxxxxxxxxxxxxxxxxxxxxxx\\\"}\""
+      ]
+    },
+    "openrouterai": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@mcpservers/openrouterai"],
+      "env": {
+        "OPENROUTER_API_KEY": "sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    }
+  }
+}
+```
+
+</details>
+
+
+<br><br>
+<br><br>
+
+### Cloud 
+
+
+<details><summary>Click to expand..</summary>
+
 ```javascript
 {
   "mcpServers": {
@@ -39,6 +92,9 @@
   }
 }
 ```
+
+</details>
+
 
 ---
 
