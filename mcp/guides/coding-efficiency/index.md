@@ -40,8 +40,10 @@
       }
     },
     "browser-tools": {
-      "command": "npx",
+      "command": "cmd",
       "args": [
+        "/c",
+        "npx",
         "-y",
         "@agentdeskai/browser-tools-mcp"
       ],
@@ -97,8 +99,10 @@
       }
     },
     "browser-tools": {
-      "command": "npx",
+      "command": "cmd",
       "args": [
+        "/c",
+        "npx",
         "-y",
         "@agentdeskai/browser-tools-mcp"
       ],
