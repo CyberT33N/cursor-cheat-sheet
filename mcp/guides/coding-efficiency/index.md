@@ -307,6 +307,7 @@
 ---
 
 # Dependencies
+- Always enforce project rules in .cursor/rules/*.mdc.
 
 ## Cursor Settings
 ```javascript
