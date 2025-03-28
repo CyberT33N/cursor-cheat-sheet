@@ -306,7 +306,14 @@
 
 ---
 
+
+
+
 # Dependencies
+
+
+<details><summary>Click to expand..</summary>
+
 - Always enforce project rules in .cursor/rules/*.mdc.
 
 ## Cursor Settings
@@ -316,8 +323,49 @@
 - Or activate in setting area and search for `shadow`
 
 
+</details>
+
+
+
+
 <br><br>
 <br><br>
+
+
+
+
+# Optional Dependencies
+
+
+<details><summary>Click to expand..</summary>
+
+# SpecStory Installation  
+
+[Offizielle Dokumentation](https://docs.specstory.com/introduction)  
+
+### Option 1 (Empfohlen)  
+
+1. Stelle sicher, dass du die neueste Version von Cursor verwendest.  
+2. Lade die Erweiterung herunter: **specstory-vscode-latest.vsix**  
+3. Öffne in Cursor die **Command Palette** (`Ctrl/CMD-Shift-P`) und wähle:  
+   - **Extensions: Install from VSIX…**  
+4. Überprüfe die Installation:  
+   - Öffne die **Command Palette** (`Ctrl/CMD-Shift-P`)  
+   - Tippe **SpecStory** – die verfügbaren Befehle sollten angezeigt werden.  
+
+Sobald SpecStory installiert ist, speichert es automatisch deinen Composer- und Chatverlauf im Verzeichnis:  
+- ./specstory/history
+
+
+</details>
+
+
+
+
+<br><br>
+<br><br>
+
+
 
 
 ---
