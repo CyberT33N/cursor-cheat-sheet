@@ -283,6 +283,31 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
 
 </details>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 # 🔍 Searching
@@ -317,11 +342,9 @@ npx -y @smithery/cli@latest install exa --client cursor
       "command": "cmd",
       "args": [
         "/c",
-        "start",
-        "/B",
         "npx",
         "-y",
-        "@exa-labs/exa-mcp-server"
+        "exa-labs/exa-mcp-server"
       ],
       "env": {
         "EXA_API_KEY": "xxxx"
