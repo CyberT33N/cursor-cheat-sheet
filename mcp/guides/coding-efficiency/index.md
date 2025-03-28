@@ -11,53 +11,6 @@
 <details><summary>Click to expand..</summary>
 
 ```javascript
-
-{
-  "mcpServers": {
-    "exa": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "exa",
-        "--key",
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      ]
-    },
-    "server-sequential-thinking": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@smithery-ai/server-sequential-thinking",
-        "--config",
-        "\"{}\""
-      ]
-    },
-    "browser-tools": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@agentdeskai/browser-tools-mcp"
-      ],
-      "enabled": true
-    },
-    "openrouterai": {
-      "command": "npx",
-      "args": ["@mcpservers/openrouterai"],
-      "env": {
-        "OPENROUTER_API_KEY": "xxxxxxxxxxxxxxxxxx"
-      }
-    }
-  }
-}
-
-
-------------------
-
-
 {
   "mcpServers": {
     "server-sequential-thinking": {
@@ -242,7 +195,9 @@
         "-y",
         "@smithery/cli@latest",
         "run",
-        "@smithery-ai/server-sequential-thinking"
+        "@smithery-ai/server-sequential-thinking",
+        "--config",
+        "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
       ]
     },
     "exa": {
