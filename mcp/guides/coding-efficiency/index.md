@@ -26,12 +26,11 @@
         "/c",
         "npx",
         "-y",
-        "@smithery/cli@latest",
-        "run",
-        "exa",
-        "--config",
-        "\"{\\\"exaApiKey\\\":\\\"xxxxxxxxxxxxxxxxxxxxxxxxxx\\\"}\""
-      ]
+        "exa-labs/exa-mcp-server"
+      ],
+      "env": {
+        "EXA_API_KEY": "xxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
     },
     "openrouterai": {
       "command": "cmd",
@@ -171,8 +170,6 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
       "command": "cmd",
       "args": [
         "/c",
-        "start",
-        "/B",
         " C:\\nvm4w\\nodejs\\node_modules\\@modelcontextprotocol\\server-sequential-thinking\\dist\\index.js"
       ]
     }
@@ -190,8 +187,6 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
       "command": "cmd",
       "args": [
         "/c",
-        "start",
-        "/B",
         "npx",
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
@@ -242,24 +237,9 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
 ```
 
 **Windows (Silent)**:
+- ???
 ```json
-{
-  "mcpServers": {
-    "server-sequential-thinking": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "start",
-        "/B",
-        "npx",
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@smithery-ai/server-sequential-thinking"
-      ]
-    }
-  }
-}
+
 ```
 
 **MAC/Linux**:
@@ -381,8 +361,6 @@ npm install -g exa-mcp-server
       "command": "cmd",
       "args": [
         "/c",
-        "start",
-        "/B",
         "exa-mcp-server"
       ],
       "env": {
@@ -419,26 +397,9 @@ npm install -g exa-mcp-server
 ```
 
 **Windows (Silent)**:
+- ???
 ```json
-{
-  "mcpServers": {
-    "exa": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "start",
-        "/B",
-        "npx",
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "exa",
-        "--config",
-        "{\"exaApiKey\":\"xxxxxxxxxxxxxxxxxx\"}"
-      ]
-    }
-  }
-}
+
 ```
 
 **MAC/Linux**:
