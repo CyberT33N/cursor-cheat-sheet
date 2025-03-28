@@ -370,7 +370,7 @@ Get-Process node | ForEach-Object { $_.Kill() }
 
 ### 🖥️ CLI
 ```shell
-npx -y @smithery/cli@latest install @smithery-ai/server-sequential-thinking --client cursor --config "{}"
+npx -y @smithery/cli@latest install @smithery-ai/server-sequential-thinking --client cursor --config "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
 ```
 
 ### 📂 JSON
@@ -457,6 +457,18 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
 
 #### Smithery - Cloud Configuration
 
+1. **maxDepth** – Erhöht die Denktiefe; je höher der Wert, desto komplexer die Überlegungen.  
+2. **parallelTasks** – Ermöglicht die gleichzeitige Verarbeitung mehrerer Gedankenstränge.  
+3. **enableSummarization** – Fasst lange Gedankenketten automatisch zusammen.  
+4. **thoughtCategorization** – Gruppiert ähnliche Gedanken für bessere Übersicht.  
+5. **progressTracking** – Verfolgt den Fortschritt von Gedankengängen.  
+6. **dynamicAdaptation** – Passt Denkstrategien basierend auf Ergebnissen dynamisch an.  
+7. **contextWindow** – Definiert die maximale Verarbeitungsgröße des Kontextes (32.768 Tokens).  
+
+---
+
+So passt’s. 😎
+
 **Windows**:
 ```json
 {
@@ -471,7 +483,7 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
         "run",
         "@smithery-ai/server-sequential-thinking",
         "--config",
-        "{}"
+        "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
       ]
     }
   }
@@ -496,7 +508,7 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
         "run",
         "@smithery-ai/server-sequential-thinking",
         "--config",
-        "{}"
+        "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
       ]
     }
   }
