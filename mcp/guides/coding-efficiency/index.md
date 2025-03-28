@@ -798,7 +798,7 @@ npx -y @smithery/cli@latest install @mcpserver/openrouterai --client cursor
 
 
 
-<details>
+</details>
 
 <br><br>
 <br><br>
