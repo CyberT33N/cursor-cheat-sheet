@@ -41,7 +41,8 @@ zsync -i ~/Applications/cursor/Cursor-0.47.8-82ef0f61c01d079d1b7e5ab04d88499d5af
 cd "$(dirname "$0")"
 
 # Finde die AppImage-Datei im aktuellen Verzeichnis
-APPIMAGE=$(ls | grep -E '^Cursor-[0-9]+(\.[0-9]+)*-[a-f0-9]+(\.deb\.glibc[0-9]+\.[0-9]+)?-x86_64\.AppImage$' | head -n 1)
+APPIMAGE=$(ls | grep -E '^Cursor-[0-9]+\.[0-9]+\.[0-9]+-x86_64\.AppImage$' | head -n 1)
+# APPIMAGE=$(ls | grep -E '^Cursor-[0-9]+(\.[0-9]+)*-[a-f0-9]+(\.deb\.glibc[0-9]+\.[0-9]+)?-x86_64\.AppImage$' | head -n 1)
 
 # Prüfe, ob eine Datei gefunden wurde
 if [ -z "$APPIMAGE" ]; then
