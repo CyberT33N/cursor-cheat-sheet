@@ -368,7 +368,33 @@ Get-Process node | ForEach-Object { $_.Kill() }
 
 <details><summary>Click to expand...</summary>
 
-### 🖥️ CLI
+# Configuration
+
+1. **maxDepth** – Erhöht die Denktiefe; je höher der Wert, desto komplexer die Überlegungen.  
+2. **parallelTasks** – Ermöglicht die gleichzeitige Verarbeitung mehrerer Gedankenstränge.  
+3. **enableSummarization** – Fasst lange Gedankenketten automatisch zusammen.  
+4. **thoughtCategorization** – Gruppiert ähnliche Gedanken für bessere Übersicht.  
+5. **progressTracking** – Verfolgt den Fortschritt von Gedankengängen.  
+6. **dynamicAdaptation** – Passt Denkstrategien basierend auf Ergebnissen dynamisch an.  
+7. **contextWindow** – Definiert die maximale Verarbeitungsgröße des Kontextes (32.768 Tokens).  
+
+The parameters *thought* and *thoughtNumber* govern the sequential logic of the MCP server and are part of its operational runtime code. Missing parameters like *enableSummarization* or *contextWindow* belong to the configuration layer (*mcp.config.js*, *mcp.json*, or environment variables) and are therefore not directly visible in the source code.  
+
+### Core Principles:  
+- **Dynamic Configuration:** Some parameters are loaded at runtime via external files or environment variables.  
+- **Modular Architecture:** MCP separates logic from configuration settings.  
+
+### Distinction:  
+- **Logic (Code):** Manages thought validation, history tracking, and process execution.  
+- **Configuration (MCP.json):** Stores custom parameters for server behavior control.  
+
+Since MCP's configuration is user-defined, parameters like *enableSummarization* must be explicitly specified in the correct configuration layer.
+
+
+<br><br>
+
+
+# 🖥️ CLI
 ```shell
 npx -y @smithery/cli@latest install @smithery-ai/server-sequential-thinking --client cursor --config "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
 ```
@@ -455,19 +481,8 @@ npm i -g @modelcontextprotocol/server-sequential-thinking
 
 ---
 
-#### Smithery - Cloud Configuration
 
-1. **maxDepth** – Erhöht die Denktiefe; je höher der Wert, desto komplexer die Überlegungen.  
-2. **parallelTasks** – Ermöglicht die gleichzeitige Verarbeitung mehrerer Gedankenstränge.  
-3. **enableSummarization** – Fasst lange Gedankenketten automatisch zusammen.  
-4. **thoughtCategorization** – Gruppiert ähnliche Gedanken für bessere Übersicht.  
-5. **progressTracking** – Verfolgt den Fortschritt von Gedankengängen.  
-6. **dynamicAdaptation** – Passt Denkstrategien basierend auf Ergebnissen dynamisch an.  
-7. **contextWindow** – Definiert die maximale Verarbeitungsgröße des Kontextes (32.768 Tokens).  
 
----
-
-So passt’s. 😎
 
 **Windows**:
 ```json
