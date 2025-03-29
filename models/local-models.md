@@ -3,6 +3,13 @@
 ## Open Threads
 - https://github.com/getcursor/cursor/issues/1380#issuecomment-2717102371
 
+<br><br>
+
+## Third party
+- https://github.com/kcolemangt/llm-router
+
+<br><br>
+
 ## Ollama Integration
 
 1. Allow Web Origins in Ollama. Will be needed for Cursor to send the request to ngrok to your ollama
