@@ -273,7 +273,9 @@
 ---
 
 # 📚 [Guide] Maximizing Coding Efficiency with MCP Sequential Thinking & OpenRouter AI
-- [Guide Link](https://forum.cursor.com/t/guide-maximizing-coding-efficiency-with-mcp-sequential-thinking-openrouter-ai/66461)
+- Part1: [Guide Link](https://forum.cursor.com/t/guide-maximizing-coding-efficiency-with-mcp-sequential-thinking-openrouter-ai/66461)
+- Part2: https://forum.cursor.com/t/guide-a-simpler-more-autonomous-ai-workflow-for-cursor/70688
+
 - [GitHub Rules](https://github.com/kleosr/cursorkleosr/tree/main/.cursor/rules)
 
 
