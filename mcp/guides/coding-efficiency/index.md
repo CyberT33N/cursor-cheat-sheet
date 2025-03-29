@@ -46,6 +46,13 @@
         "@agentdeskai/browser-tools-mcp"
       ],
       "enabled": true
+    },
+    "ucpf": {
+       "command": "node",
+       "args": ["/home/UserName/Projects/mcp/server/prompting/DeepLucid3D-MCP/build/index.js"],
+       "env": {},
+       "disabled": false,
+       "autoApprove": []
     }
   }
 }
@@ -101,6 +108,17 @@
       "env": {
         "OPENROUTER_API_KEY": "xxxxxxxxxxxxxxxxxx"
       }
+    },
+    "deeplucid3d-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@MushroomFleet/deeplucid3d-mcp",
+        "--config",
+        "{\"defaultRenderer\":\"threejs\",\"shaderDebug\":true}"
+      ]
     }
   }
 }
@@ -361,494 +379,56 @@ Get-Process node | ForEach-Object { $_.Kill() }
 
 ---
 
+# Cognitive Frameworks
+
 # 🔄 Sequential Thinking
-- [NPM Package](https://www.npmjs.com/package/@modelcontextprotocol/server-sequential-thinking)
-- [Smithery AI Docs](https://smithery.ai/server/@smithery-ai/server-sequential-thinking)
-- [GitHub Sequential Thinking](https://github.com/smithery-ai/reference-servers/tree/main/src/sequentialthinking)
-
-<details><summary>Click to expand...</summary>
-
-# Configuration
-
-1. **maxDepth** – Erhöht die Denktiefe; je höher der Wert, desto komplexer die Überlegungen.  
-2. **parallelTasks** – Ermöglicht die gleichzeitige Verarbeitung mehrerer Gedankenstränge.  
-3. **enableSummarization** – Fasst lange Gedankenketten automatisch zusammen.  
-4. **thoughtCategorization** – Gruppiert ähnliche Gedanken für bessere Übersicht.  
-5. **progressTracking** – Verfolgt den Fortschritt von Gedankengängen.  
-6. **dynamicAdaptation** – Passt Denkstrategien basierend auf Ergebnissen dynamisch an.  
-7. **contextWindow** – Definiert die maximale Verarbeitungsgröße des Kontextes (32.768 Tokens).  
-
-The parameters *thought* and *thoughtNumber* govern the sequential logic of the MCP server and are part of its operational runtime code. Missing parameters like *enableSummarization* or *contextWindow* belong to the configuration layer (*mcp.config.js*, *mcp.json*, or environment variables) and are therefore not directly visible in the source code.  
-
-### Core Principles:  
-- **Dynamic Configuration:** Some parameters are loaded at runtime via external files or environment variables.  
-- **Modular Architecture:** MCP separates logic from configuration settings.  
-
-### Distinction:  
-- **Logic (Code):** Manages thought validation, history tracking, and process execution.  
-- **Configuration (MCP.json):** Stores custom parameters for server behavior control.  
-
-Since MCP's configuration is user-defined, parameters like *enableSummarization* must be explicitly specified in the correct configuration layer.
-
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/cognitive-frameworks/sequential-thinking/index.md
 
 <br><br>
 
-
-# 🖥️ CLI
-```shell
-npx -y @smithery/cli@latest install @smithery-ai/server-sequential-thinking --client cursor --config "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
-```
-
-### 📂 JSON
-- `~/.cursor/mcp.json`
-
----
-
-#### Docker Configuration
-```json
-{
-  "mcpServers": {
-    "sequentialthinking": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "mcp/sequentialthinking"
-      ]
-    }
-  }
-}
-```
-
----
-
-#### Local Configuration
-
-**Method #1**:
-
-##### 🖥️ Windows
-```powershell
-npm i -g @modelcontextprotocol/server-sequential-thinking
-```
-
-```json
-"mcpServers": {
-   "sequential-thinking": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        " C:\\nvm4w\\nodejs\\node_modules\\@modelcontextprotocol\\server-sequential-thinking\\dist\\index.js"
-      ]
-    }
-  }
-}
-```
-
-**Method #2**:
-
-##### 🖥️ Windows
-```javascript
-{
-  "mcpServers": {
-    "sequential-thinking": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    }
-  }
-}
-```
-
-##### 🐧 Linux
-```json
-{
-  "mcpServers": {
-    "sequential-thinking": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    }
-  }
-}
-```
-
----
+# 🔌 DeepLucid3D UCPF Server
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/cognitive-frameworks/deeplucid3d-ucpf/index.md
 
 
 
 
-**Windows**:
-```json
-{
-  "mcpServers": {
-    "server-sequential-thinking": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@smithery-ai/server-sequential-thinking",
-        "--config",
-        "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
-      ]
-    }
-  }
-}
-```
-
-**Windows (Silent)**:
-- ???
-```json
-
-```
-
-**MAC/Linux**:
-```json
-{
-  "mcpServers": {
-    "server-sequential-thinking": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@smithery-ai/server-sequential-thinking",
-        "--config",
-        "{\"maxDepth\":8,\"parallelTasks\":true,\"enableSummarization\":true,\"thoughtCategorization\":true,\"progressTracking\":true,\"dynamicAdaptation\":true,\"contextWindow\":32768}"
-      ]
-    }
-  }
-}
-```
-
-</details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
+<br><br>
+<br><br>
 
 # 🔍 Searching
-- [Search Docs](https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/search.md)
+- [Search Servers ](https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/search.md)
 
-## 🔧 exa
-- [Exa MCP Server](https://github.com/exa-labs/exa-mcp-server)
-- [Smithery Exa Server](https://smithery.ai/server/exa)
-- [Exa API Keys](https://dashboard.exa.ai/api-keys)
+<br><br>
 
-<details><summary>Click to expand...</summary>
+## 🔧 Exa
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/search/exa/index.md
 
-### 🖥️ CLI
-```shell
-npx -y @smithery/cli@latest install exa --client cursor
-```
 
-### 📂 JSON
-- `~/.cursor/mcp.json`
 
----
 
-#### Local Configuration
+<br><br>
+<br><br>
 
-**Method #1 (Recommended)**:
+# Browser Automation
 
-##### 🖥️ Windows
-```javascript
-{
-  "mcpServers": {
-    "exa": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "exa-labs/exa-mcp-server"
-      ],
-      "env": {
-        "EXA_API_KEY": "xxxx"
-      }
-    }
-  }
-}
-```
+<br><br>
 
-##### 🐧 Linux
-```javascript
-{
-  "mcpServers": {
-    "exa": {
-      "command": "npx",
-      "args": ["exa-labs/exa-mcp-server"],
-      "env": {
-        "EXA_API_KEY": "xxxx"
-      }
-    }
-  }
-}
-```
+## 🌐 Browser Tools MCP
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/browser-automation/browser-tools/index.md
 
-**Method #2**:
-```shell
-npm install -g exa-mcp-server
-```
 
-##### 🖥️ Windows
-```json
-"mcpServers": {
-   "exa": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "exa-mcp-server"
-      ],
-      "env": {
-        "EXA_API_KEY": "xxxxxxxxx"
-      }
-    }
-  }
-}
-```
 
----
 
-#### Smithery Configuration
+<br><br>
+<br><br>
 
-**Windows**:
-```json
-{
-  "mcpServers": {
-    "exa": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "exa",
-        "--config",
-        "{\"exaApiKey\":\"xxxxxxxxxxxxxxxxxx\"}"
-      ]
-    }
-  }
-}
-```
+# AI Providers
 
-**Windows (Silent)**:
-- ???
-```json
+## 🔌 OpenRouter
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/ai-providers/openrouter/index.md
 
-```
 
-**MAC/Linux**:
-```json
-{
-  "mcpServers": {
-    "exa": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "exa",
-        "--config",
-        "{\"exaApiKey\":\"xxxxxxxxxxxxxxxxxx\"}"
-      ]
-    }
-  }
-}
-```
-- Replace your API key with the one from [Exa API Dashboard](https://dashboard.exa.ai/api-keys).
 
-</details>
-
----
-
-# 🌐 Browser Tools MCP
-- [Browser Tools MCP GitHub](https://github.com/AgentDeskAI/browser-tools-mcp)
-- [Installation Guide](https://browsertools.agentdesk.ai/installation)
-- **Note**: Does not work as a direct import with Electron.js. Use remote debugging.
-
-<details><summary>Click to expand...</summary>
-
-### 📝 Guides
-- [Quick Start Guide](https://browsertools.agentdesk.ai/quickstart)
-
-### 1. Install Chrome Extension
-- Download the Chrome Extension from [Releases](https://github.com/AgentDeskAI/browser-tools-mcp/releases).
-
-**Manually load the unpacked extension**:
-1. **Open Chrome**  
-2. **Go to `chrome://extensions/`**  
-3. **Enable Developer Mode** (top-right toggle)  
-4. **Click "Load unpacked"**  
-5. **Select the folder containing `manifest.json`**  
-6. **Done!** The extension is now active.  
-
-If any errors occur, check the developer console (`F12` → "Console") for debugging info. 🚀
-
-### 2. Install MCP and Run Server
-```shell
-npm install -g @agentdeskai/browser-tools-mcp
-npx @agentdeskai/browser-tools-server
-```
-- Note: The browser-tools-server runs on port 3025. Ensure no processes are using this port.
-
-#### JSON Configuration
-- `~/.cursor/mcp.json`
-
-**Windows**:
-```json
-{
-  "mcpServers": {
-    "browser-tools": {
-      "command": "wsl",
-      "args": [
-        "bash",
-        "-c",
-        "cmd /c npx -y @agentdeskai/browser-tools-mcp@1.2.0"
-      ],
-      "enabled": true
-    }
-  }
-}
-```
-
-**MAC/Linux**:
-```json
-{
-  "mcpServers": {
-    "browser-tools": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@agentdeskai/browser-tools-mcp"
-      ],
-      "enabled": true
-    }
-  }
-}
-```
-
-### 3. Verify Extension Connection
-- Open Chrome Developer Tools: Right-click any page → Inspect. Logs will show in the console if MCP client is connected.
-
-Enable:
-- Auto-paste to Cursor
-- Include Request Headers
-- Include Response Headers
-
-</details>
-
----
-
-# 🔌 OpenRouter
-- [OpenRouter AI Server Docs](https://smithery.ai/server/@mcpserver/openrouterai)
-- [GitHub OpenRouter AI](https://github.com/heltonteixeira/openrouterai)
-
-## 🔍 Find Models
-- [Claude 3.7 Sonnet](https://openrouter.ai/anthropic/claude-3.7-sonnet)
-
-<details><summary>Click to expand...</summary>
-
-### 🖥️ CLI
-```json
-npx -y @smithery/cli@latest install @mcpserver/openrouterai --client cursor
-```
-
-### 📂 JSON
-
-#### Local Configuration
-```json
-{
-  "mcpServers": {
-    "openrouterai": {
-      "command": "npx",
-      "args": ["@mcpservers/openrouterai"],
-      "env": {
-        "OPENROUTER_API_KEY": "xxxxxxxxxxxxxxxxxxxxxxxx"
-      }
-    }
-  }
-}
-```
-
----
-
-#### Smithery Configuration
-
-**MAC/Linux**:
-```json
-{
-  "mcpServers": {
-    "openrouterai": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@mcpserver/openrouterai",
-        "--config",
-        "{\"openrouterApiKey\":\"xxxxxxxxxxxxxxx\",\"openrouterDefaultModel\":\"\"}"
-      ]
-    }
-  }
-}
-```
-
-**Windows**:
-```json
-{
-  "mcpServers": {
-    "openrouterai": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "@smithery/cli@latest",
-        "run",
-        "@mcpserver/openrouterai",
-        "--config",
-        "{\"openrouterApiKey\":\"xxxxxxxxxxxxxxx\",\"openrouterDefaultModel\":\"\"}"
-      ]
-    }
-  }
-}
-```
-
-</details>
 
 
 
@@ -856,6 +436,7 @@ npx -y @smithery/cli@latest install @mcpserver/openrouterai --client cursor
 
 <br><br>
 <br><br>
+
 
 ---
 
@@ -863,4 +444,4 @@ npx -y @smithery/cli@latest install @mcpserver/openrouterai --client cursor
 Include into your project:
 - [Cursor GitHub Rules](https://github.com/kleosr/cursorkleosr/tree/main#)
 
-Open any `.mdc` file in `.cursor/rules` and check if the rule type applied correctly by Cursor. If not, set manually, e.g., `alwaysApply: true`.
+
