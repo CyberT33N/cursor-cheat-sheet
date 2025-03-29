@@ -1,5 +1,39 @@
 # Install/Update
 
+
+## Linux
+
+<details><summary>Click to expand..</summary>
+
+# Update existing cursor with zsync file
+
+<details><summary>Click to expand..</summary>
+
+```bash
+sudo apt install zsyn
+```
+
+
+```bash
+cd ~/Applications/cursor/
+zsync -i ~/Applications/cursor/Cursor-0.47.8-82ef0f61c01d079d1b7e5ab04d88499d5af500e3.deb.glibc2.25-x86_64.AppImage -u "https://downloads.cursor.com/production/b6fb41b5f36bda05cab7109606e7404a65d1ff32/linux/x64/Cursor-0.47.9-x86_64.AppImage.zsync"
+```
+
+</details>
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+# Install or update
+
+<details><summary>Click to expand..</summary>
+
 ```bash
 #!/bin/bash
 
@@ -54,4 +88,8 @@ fi
 
 # Starte die extrahierte Anwendung
 ./squashfs-root/AppRun
-``` 
+```
+
+</details>
+
+</details>
