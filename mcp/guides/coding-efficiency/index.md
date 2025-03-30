@@ -445,6 +445,10 @@ Get-Process node | ForEach-Object { $_.Kill() }
 Include into your project:
 - [Autonomous AI Workflow for Cursor](https://github.com/kleosr/cursorkleosr/tree/main#)
 
+v1:
+
+<details><summary>Click to expand..</summary>
+
 <details><summary>Click to expand..</summary>
 
 I tweaked the logic by include everything into .agent folder to not bloat up your project root:
@@ -744,6 +748,13 @@ RULE_ERR_HANDLE_GENERAL_01:
 </details>
 
 
+</details>
+
+</details>
+
+
+
+
 
 
 
@@ -855,10 +866,6 @@ Du priorisierst **Clean Code**, **Klarheit** (Feynman), **Strenge** (Uncle Bob),
     console.error('❌ Failed to save settings to disk', { error: err.message });
     console.trace('🔍 Entering complex calculation step');
 ```
-
-
-</details>
-
 
 
 
