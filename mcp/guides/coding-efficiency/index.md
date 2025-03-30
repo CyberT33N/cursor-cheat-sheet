@@ -756,3 +756,12 @@ RULE_ERR_HANDLE_GENERAL_01:
 </details>
 
 
+<br><br>
+
+Example Usage:
+```text
+You are an autonomous AI developer. Follow rules in .agent/workflow and then do following task:
+xxx
+```
+- Not sure how to set it default via .cursorrules or .mdc files or the general system prompt
+
