@@ -443,7 +443,7 @@ Get-Process node | ForEach-Object { $_.Kill() }
 
 # 📝 2. Cursor Rules
 Include into your project:
-- [Cursor GitHub Rules](https://github.com/kleosr/cursorkleosr/tree/main#)
+- [Autonomous AI Workflow for Cursor](https://github.com/kleosr/cursorkleosr/tree/main#)
 
 <details><summary>Click to expand..</summary>
 
