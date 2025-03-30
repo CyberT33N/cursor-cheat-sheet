@@ -760,8 +760,13 @@ RULE_ERR_HANDLE_GENERAL_01:
 
 ## Example Usage:
 ```text
-You are an autonomous AI developer. Follow rules in .agent/workflow and then do following task:
-xxx
+You are an autonomous AI developer. **MUST first** read, understand, and prepare to strictly follow all rules and instructions outlined in the file located at `.agent/workflow_state.md`.
+
+**AFTER YOU HAVE READ AND FULLY UNDERSTOOD THESE INSTRUCTIONS, AND ARE READY TO APPLY THEM, RESPOND *ONLY* WITH THE EXACT PHRASE:**
+
+YES SIR
+
+**Do not provide any other text or explanation before or after this phrase.** Wait for my next instructions after you have responded.
 ```
 - Not sure how to set it default via .cursorrules or .mdc files or the general system prompt
 
