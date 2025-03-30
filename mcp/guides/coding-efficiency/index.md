@@ -449,7 +449,6 @@ v1:
 
 <details><summary>Click to expand..</summary>
 
-<details><summary>Click to expand..</summary>
 
 I tweaked the logic by include everything into .agent folder to not bloat up your project root:
 
@@ -748,9 +747,6 @@ RULE_ERR_HANDLE_GENERAL_01:
 </details>
 
 
-</details>
-
-</details>
 
 
 
