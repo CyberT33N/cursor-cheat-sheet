@@ -760,7 +760,7 @@ RULE_ERR_HANDLE_GENERAL_01:
 <br><br>
 <br><br>
 
-## System Prompt (Settings > Rules):
+## Cursor General System Prompt (Settings > Rules > User Rules ):
 - Modified for my use cases and includes the workflow check
 
 <details><summary>Click to expand..</summary>
