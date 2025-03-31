@@ -53,6 +53,13 @@
        "env": {},
        "disabled": false,
        "autoApprove": []
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-4xxxxxxxxxxxxxxxxxxx4"
+      }
     }
   }
 }
@@ -118,6 +125,17 @@
         "@MushroomFleet/deeplucid3d-mcp",
         "--config",
         "{\"defaultRenderer\":\"threejs\",\"shaderDebug\":true}"
+      ]
+    },
+    "mcp-server-firecrawl": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@mendableai/mcp-server-firecrawl",
+        "--config",
+        "{\"fireCrawlApiKey\":\"ergergergerg\"}"
       ]
     }
   }
@@ -187,6 +205,13 @@
         "@agentdeskai/browser-tools-mcp"
       ],
       "enabled": true
+    },
+    "firecrawl": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-xxxxxxxxxxxxxxxxxxxxx"
+      }
     }
   }
 }
@@ -247,6 +272,19 @@
         "@agentdeskai/browser-tools-mcp"
       ],
       "enabled": true
+    },
+    "mcp-server-firecrawl": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@mendableai/mcp-server-firecrawl",
+        "--config",
+        "{\"fireCrawlApiKey\":\"ergergergerg\"}"
+      ]
     }
   }
 }
