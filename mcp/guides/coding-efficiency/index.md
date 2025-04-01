@@ -1,3 +1,7 @@
+# Also read
+- https://github.com/bmadcode/cursor-custom-agents-rules-generator/tree/main
+
+
 # 🛠️ Working Global Configs
 
 <details><summary>Click to expand..</summary>
