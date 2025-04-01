@@ -4,7 +4,7 @@ Dieser Abschnitt enthält Informationen über die Chat-Funktionalität in Cursor
 
 ## Inhaltsverzeichnis
 
-- [Custom Modes](custom-modes.md) - Benutzerdefinierte Chat-Modi erstellen und konfigurieren
+- [Custom Modes](modes/custom-modes.md) - Benutzerdefinierte Chat-Modi erstellen und konfigurieren
 
 ## Übersicht
 
