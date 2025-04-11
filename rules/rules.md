@@ -6,6 +6,11 @@ This section explains how to use rules to customize AI behavior in Cursor.
 
 <details><summary>Click to expand..</summary>
 
+
+
+
+
+
 Example:
 
 <details><summary>Click to expand..</summary>
@@ -180,6 +185,8 @@ You can create a new rule using the command palette with `Cmd + Shift + P > New 
 - Code style and architecture preferences for specific folders.
 
 
+
+</details>
 
 </details>
 
