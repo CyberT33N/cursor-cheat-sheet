@@ -164,6 +164,10 @@ Example:
 ```
 
 
+</details>
+
+
+
 Project rules offer a powerful and flexible system with path-specific configurations. Project rules are stored in the `.cursor/rules` directory and provide granular control over AI behavior in different parts of your project.
 
 ### How They Work
@@ -186,7 +190,6 @@ You can create a new rule using the command palette with `Cmd + Shift + P > New 
 
 
 
-</details>
 
 </details>
 
