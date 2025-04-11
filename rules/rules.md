@@ -8,10 +8,10 @@ This section explains how to use rules to customize AI behavior in Cursor.
 
 
 
+<br><br>
 
 
-
-Example:
+# Example:
 
 <details><summary>Click to expand..</summary>
 
