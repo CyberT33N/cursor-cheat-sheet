@@ -2,6 +2,17 @@
 
 This section explains how to use rules to customize AI behavior in Cursor.
 
+
+
+## Templates
+- https://github.com/CyberT33N/cursor-base-rules/tree/main
+
+
+<br><br>
+
+
+
+
 ## Project Rules
 
 <details><summary>Click to expand..</summary>
