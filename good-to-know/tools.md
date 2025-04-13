@@ -14,6 +14,9 @@
 ## Ausführungstools
 - **run_terminal_cmd** - Ausführen von Terminal-Befehlen
 
+## Chat/Composer
+- **user_query** - Benutzer Text in Chat Box
+
 ## Regeln & Kontext
 - **fetch_rules** - Abrufen von nutzerspezifischen Regeln
 
