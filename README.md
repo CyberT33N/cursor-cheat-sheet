@@ -34,7 +34,9 @@ This repository contains a comprehensive cheat sheet for using Cursor, the AI-po
    - [Limitations](mcp/limitations.md)
 
 8. [Good to Know](good-to-know/index.md)
-   - [Structure](good-to-know/structure.md) 
+   - [Structure](good-to-know/structure.md)
+   - [Tools](good-to-know/tools.md)
+   - [Internal](good-to-know/internal.md) 
 
 9. [Chat](chat/index.md)
    - [Custom Modes](chat/custom-modes.md) 
