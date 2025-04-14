@@ -1,4 +1,35 @@
 
+# Umgebungsvariabeln
+```
+{
+  "cursorEnvironment": {
+    "OS": {
+      "version": "win32 10.0.22631",
+      "platform": "windows",
+      "architecture": "x64"
+    },
+    "workspace": {
+      "path": "/c%3A/Projects/cheat-sheets/ai/prompts-cheat-sheet",
+      "absolutePath": "C:/Projects/cheat-sheets/ai/prompts-cheat-sheet"
+    },
+    "shell": {
+      "path": "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "type": "powershell"
+    },
+    "runtime": {
+      "assistantModel": "Claude 3.7 Sonnet",
+      "mode": "cursor",
+      "codeContext": true
+    },
+    "session": {
+      "id": "cursor-session-2023",
+      "startTime": "2023-12-01T12:00:00Z"
+    }
+  }
+}
+```
+
+
 # Prompting Layer Order
 
 Hier ist eine detaillierte Aufschlüsselung der Prompts in meinem Kontext in der Reihenfolge, wie sie geladen wurden:
