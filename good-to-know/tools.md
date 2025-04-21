@@ -19,6 +19,15 @@
 
 ## Regeln & Kontext
 - **fetch_rules** - Abrufen von nutzerspezifischen Regeln
+```
+print(default_api.fetch_rules(
+    rule_names = [
+        ".ai/rules/shared-rules/core/global-rules/emoji-communication.mdc",
+        ".ai/rules/custom-rules/database-rules/evident-reference-documentation-always.mdc"
+        # Füge hier weitere Regelpfade hinzu, falls benötigt
+    ]
+))
+```
 
 ## Web & Recherche
 - **web_search** - Suche im Web nach Echtzeit-Informationen
