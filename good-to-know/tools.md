@@ -1,9 +1,17 @@
 # Tools
+- https://docs.cursor.com/chat/tools
 - Hier ist eine vollständige Liste aller Tools, die mir zur Verfügung stehen:
 
 ## Dateisystem & Codebase-Tools
 - **codebase_search** - Semantische Suche im Code nach relevanten Snippets
+
 - **read_file** - Lesen von Dateiinhalten mit anpassbarem Bereich
+```
+Read the contents of a file within your codebase.
+— Up to 750 lines in max mode
+— Up to 250 lines in other modes
+```
+  
 - **list_dir** - Auflisten des Inhalts eines Verzeichnisses
 - **file_search** - Fuzzy-Suche nach Dateien anhand von Teilen des Pfades
 - **edit_file** - Vorschlagen und Anwenden von Änderungen an Dateien
