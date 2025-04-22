@@ -2,6 +2,17 @@
 - https://docs.cursor.com/chat/tools
 - Hier ist eine vollständige Liste aller Tools, die mir zur Verfügung stehen:
 
+
+Cursor will call tools like this:
+```
+Tool Name: default_api.read_file
+```
+
+
+
+
+
+
 ## Dateisystem & Codebase-Tools
 
 ### **codebase_search** - Semantische Suche im Code nach relevanten Snippets
