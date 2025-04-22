@@ -487,6 +487,15 @@ Get-Process node | ForEach-Object { $_.Kill() }
 
 
 
+<br><br>
+<br><br>
+
+# Filesystem 
+
+## 🔌 Filesystem Extended
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/file-systems.md#mcp-filesystem-extended
+
+
 
 
 
