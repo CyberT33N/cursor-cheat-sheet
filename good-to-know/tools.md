@@ -3,9 +3,15 @@
 - Hier ist eine vollständige Liste aller Tools, die mir zur Verfügung stehen:
 
 
-Cursor will call tools like this:
+
+Cursor will call their internal tools like this:
 ```
 Tool Name: default_api.read_file
+```
+
+You can call mcp server tools like this:
+```
+default_api.read_files ["temp\index.ts"]
 ```
 
 
