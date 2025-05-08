@@ -496,6 +496,19 @@ Get-Process node | ForEach-Object { $_.Kill() }
 - https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/file-systems.md#mcp-filesystem-extended
 
 
+<br><br>
+<br><br>
+
+# Project Management 
+
+## 🔌 mcp-atlassian
+- https://github.com/CyberT33N/mcp-cheat-sheet/blob/main/mcp-servers/project-management.md#mcp-atlassian
+
+
+
+
+
+
 
 
 
