@@ -32,6 +32,8 @@ zsync -i ~/Applications/cursor/Cursor-0.47.8-82ef0f61c01d079d1b7e5ab04d88499d5af
 
 # Install or update
 
+- /home/xxxxx/Applications/cursor/
+
 <details><summary>Click to expand..</summary>
 
 ```bash
