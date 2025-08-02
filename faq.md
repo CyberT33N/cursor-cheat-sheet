@@ -8,8 +8,8 @@
 Version=1.0
 Name=Cursor (I/O Gedrosselt)
 Comment=Startet den Cursor-Editor mit reduzierter I/O-Priorität
-Exec=ionice -c 3 /home/t33n/Applications/cursor/squashfs-root/usr/bin/cursor %U
-Icon=/home/t33n/Applications/cursor/squashfs-root/cursor.png
+Exec=ionice -c 3 /home/userName/Applications/cursor/squashfs-root/usr/bin/cursor %U
+Icon=/home/userName/Applications/cursor/squashfs-root/cursor.png
 Terminal=false
 Type=Application
 Categories=Development;TextEditor;
