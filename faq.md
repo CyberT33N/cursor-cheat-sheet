@@ -4,7 +4,48 @@
 
 
 
-## Option 0
+## Option 0 - Replace with RAM write
+```bash
+#!/bin/bash
+
+set -e
+
+# 📁 Original und Overlay-Ziele
+STATE_ORIG="$HOME/.config/Cursor/User/globalStorage"
+STATE_FUSED="$HOME/.config/Cursor/User/globalStorage-fused"
+
+# 📦 RAM-basierter Schreibpuffer (im selben Dateisystem wie $HOME)
+UPPER="$HOME/.cache/cursor_overlay_upper"
+WORK="$HOME/.cache/cursor_overlay_work"
+
+# 🧯 Sicherheit: Nicht mit sudo ausführen!
+if [[ "$EUID" -eq 0 ]]; then
+  echo "🚫 Nicht mit sudo starten!"
+  exit 1
+fi
+
+# 🧹 Vorherige Mounts killen
+if mountpoint -q "$STATE_FUSED"; then
+  echo "🔁 Vorheriges FUSE-Overlay wird entfernt..."
+  fusermount -u "$STATE_FUSED"
+fi
+
+# 🛠️ Verzeichnisse vorbereiten
+mkdir -p "$UPPER" "$WORK" "$STATE_FUSED"
+
+# 🔧 Overlay mounten
+echo "🔧 Mounting OverlayFS..."
+fuse-overlayfs -o lowerdir="$STATE_ORIG",upperdir="$UPPER",workdir="$WORK" "$STATE_FUSED" || {
+  echo "❌ Mount fehlgeschlagen – prüf workdir & upperdir"
+  exit 1
+}
+
+# 🧨 GlobalStorage ersetzen durch Symlink auf das Overlay
+rm -rf "$STATE_ORIG"
+ln -s "$STATE_FUSED" "$STATE_ORIG"
+
+echo "✅ Overlay aktiv: Cursor schreibt jetzt in RAM-Schicht 💾🚫"
+```
 
 
 
