@@ -108,6 +108,13 @@ journalctl --user -u cursor-throttled.service -f
 * System muss `cgroups v2` nutzen (Ubuntu 20.04+ mit neueren Kerneln).
 
 
+### Werte ändern bei BedaRF UND NEUSTARTEN MIT:
+```shell
+systemctl --user daemon-reload
+systemctl --user restart cursor-throttled.service
+```
+
+
 </details>
 
 <br><br>
