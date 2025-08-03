@@ -10,45 +10,97 @@
 
 set -e
 
-# 📁 Original und Overlay-Ziele
 STATE_ORIG="$HOME/.config/Cursor/User/globalStorage"
 STATE_FUSED="$HOME/.config/Cursor/User/globalStorage-fused"
 
-# 📦 RAM-basierter Schreibpuffer (im selben Dateisystem wie $HOME)
-UPPER="$HOME/.cache/cursor_overlay_upper"
-WORK="$HOME/.cache/cursor_overlay_work"
+# Persistent Upper und Work Verzeichnisse (keine RAM-Pfade)
+UPPER="$HOME/.local/share/cursor_overlay_upper"
+WORK="$HOME/.local/share/cursor_overlay_work"
 
-# 🧯 Sicherheit: Nicht mit sudo ausführen!
+# Backup-Datei (dein 1GB Schatz)
+BACKUP_FILE="$STATE_ORIG/state.vscdb_backup"
+
+CURSOR_BIN="$HOME/Applications/cursor/squashfs-root/usr/bin/cursor"
+
+# Intervall fürs Backup-Update (in Sekunden)
+BACKUP_INTERVAL=600  # 10 Minuten
+
+# Safety: Nicht mit sudo starten
 if [[ "$EUID" -eq 0 ]]; then
-  echo "🚫 Nicht mit sudo starten!"
+  echo "🚫 Bitte nicht als root ausführen!"
   exit 1
 fi
 
-# 🧹 Vorherige Mounts killen
+pkill -9 cursor || true
+sleep 1
+fusermount -uz "$STATE_FUSED"
+
+# Ordner vorbereiten
+mkdir -p "$UPPER" "$WORK" "$STATE_FUSED" "$STATE_ORIG"
+
+# Backup Restore: Wenn upper/state.vscdb fehlt, kopiere Backup rein
+if [ ! -f "$UPPER/state.vscdb" ]; then
+  if [ -f "$BACKUP_FILE" ]; then
+    echo "♻️ Backup wird in Overlay kopiert..."
+    cp "$BACKUP_FILE" "$UPPER/state.vscdb"
+  else
+    echo "⚠️ Backup-Datei fehlt, Overlay startet leer."
+  fi
+fi
+
+# Falls Overlay schon gemountet, vorher unmounten
 if mountpoint -q "$STATE_FUSED"; then
-  echo "🔁 Vorheriges FUSE-Overlay wird entfernt..."
+  echo "🔁 Vorheriges Overlay wird entfernt..."
   fusermount -u "$STATE_FUSED"
 fi
 
-# 🛠️ Verzeichnisse vorbereiten
-mkdir -p "$UPPER" "$WORK" "$STATE_FUSED"
-
-# 🔧 Overlay mounten
+# Overlay mounten
 echo "🔧 Mounting OverlayFS..."
 fuse-overlayfs -o lowerdir="$STATE_ORIG",upperdir="$UPPER",workdir="$WORK" "$STATE_FUSED" || {
-  echo "❌ Mount fehlgeschlagen – prüf workdir & upperdir"
+  echo "❌ Mount fehlgeschlagen – prüfe workdir & upperdir"
   exit 1
 }
 
-# 🧨 GlobalStorage ersetzen durch Symlink auf das Overlay
+# Symlink ersetzen
 rm -rf "$STATE_ORIG"
 ln -s "$STATE_FUSED" "$STATE_ORIG"
 
-echo "✅ Overlay aktiv: Cursor schreibt jetzt in RAM-Schicht 💾🚫"
+echo "✅ Overlay aktiv. Cursor schreibt in persistentem RAM-Overlay."
+echo "⏳ Backup-Synchronisation läuft alle $((BACKUP_INTERVAL/60)) Minuten im Hintergrund."
+
+# Backup-Update Loop im Hintergrund starten
+(
+  while true; do
+    if [ -f "$UPPER/state.vscdb" ]; then
+      echo "💾 Backup aktualisieren: $BACKUP_FILE"
+      cp "$UPPER/state.vscdb" "$BACKUP_FILE"
+    else
+      echo "⚠️ state.vscdb im Overlay nicht gefunden!"
+    fi
+    sleep $BACKUP_INTERVAL
+  done
+) &
+
+# Starte Cursor mit nice und ionice, damit die I/O-Last sinkt
+ionice -c 3 nice -n 19 "$CURSOR_BIN"
+```
+
+cursor-fused.desktop:
+```
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Cursor (I/O Gedrosselt)
+Comment=Startet den Cursor-Editor mit reduzierter I/O-Priorität
+Exec=/home/userName/Applications/cursor/fix-freezes.sh
+Icon=/home/userName/Applications/cursor/squashfs-root/cursor.png
+Terminal=false
+Type=Application
+Categories=Development;TextEditor;
 ```
 
 
-
+<br><br>
 
 
 
