@@ -62,17 +62,59 @@ Inhalt:
 
 ```ini
 [Unit]
-Description=Cursor Editor mit I/O Limit
+Description=Cursor Editor mit I/O Limit und niedriger Priorität
+# Beschreibung des Services, wie er im System auftaucht.
 
 [Service]
-ExecStart=/pfad/zur/app
-# Physisches Blockdevice hier setzen (z.B. 249:3)
-IOReadBandwidthMax=249:3 1M
-IOWriteBandwidthMax=249:3 1M
+ExecStart=/home/userName/Applications/cursor/squashfs-root/usr/bin/cursor
+# Startet die Cursor-Anwendung.
+
+IOReadBandwidthMax=249:3 115M
+# Maximale Lesebandbreite auf physischem Device (Major:Minor 249:3).
+# '1M' = 1 Megabyte pro Sekunde.
+# Je kleiner der Wert, desto strenger die Drosselung.
+# Höchster Wert = keine Limitierung (Wert weglassen).
+# Niedrigster Wert = minimalste erlaubte Bandbreite (~1 Byte).
+
+IOWriteBandwidthMax=249:3 115M
+# Gleiche Logik für Schreibbandbreite.
+
+# Nice=-20
+# CPU-Priorität (nice-Wert) von -20 (höchste Priorität) bis +19 (niedrigste Priorität).
+# Höchster Prioritätswert, den du setzen kannst, ist +19 → Prozess wird erst ausgeführt, wenn CPU komplett frei ist.
+# Niedrigster Wert ist -20 → Prozess läuft bevorzugt und kann anderen Prozessen CPU wegnehmen.
+# Für Ressourcenschonung immer möglichst hoch setzen, also +19.
+
+# IOSchedulingClass=2
+# I/O Scheduler-Klassen:
+# 1 = Echtzeit (Realtime) – höchste I/O-Priorität
+# 2 = Beste Bemühungen (Best Effort) – Standard
+# 3 = Idle – niedrigste Priorität, I/O nur wenn sonst nichts los ist.
+# Für Drosselung muss dieser Wert auf 3 (Idle) gesetzt werden.
+
+# IOSchedulingPriority=2
+# Priorität innerhalb der Scheduler-Klasse:
+# Gültig nur für Klassen 1 (Realtime) und 2 (Best Effort).
+# Werte von 0 (höchste Priorität) bis 7 (niedrigste Priorität).
+# Für Klasse 3 (Idle) wird dieser Wert ignoriert, aber es schadet nicht, 7 zu setzen.
+
 Restart=on-failure
+# Automatischer Neustart des Prozesses bei Absturz.
+
+# Weitere sinnvolle Optionen (nicht zwingend "MUSS", aber empfohlen):
+
+# CPUQuota=20%
+# Begrenzung der CPU-Auslastung auf 20% (alternativ zu Nice).
+# Nützlich, wenn du zusätzlich zur Priorität auch absolute CPU-Beschränkungen willst.
+
+# MemoryMax=500M
+# Maximaler RAM-Verbrauch, hier z.B. 500 Megabyte.
+# Hilft bei Speicher-Lecks und schützt das System.
 
 [Install]
 WantedBy=default.target
+# Startet den Service automatisch mit der User-Session.
+
 ```
 
 ---
@@ -113,6 +155,23 @@ journalctl --user -u cursor-throttled.service -f
 systemctl --user daemon-reload
 systemctl --user restart cursor-throttled.service
 ```
+
+---
+
+### So deaktivierst du den Autostart komplett:
+
+```bash
+systemctl --user disable cursor-throttled.service
+```
+
+---
+
+### Und so stoppst du den aktuell laufenden Service:
+
+```bash
+systemctl --user stop cursor-throttled.service
+```
+
 
 
 </details>
