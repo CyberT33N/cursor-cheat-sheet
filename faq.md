@@ -1,7 +1,18 @@
 # Freezing problems
+- Also, mit sehr hoher Wahrscheinlichkeit liegt es an den Schreibzugriffen in die lokale SQLite 3-Datenbank https://forum.cursor.com/t/frequent-freezes-in-cursor-ai-ide-any-solutions/13810/25?u=cybert33n
+  - ~/.config/Cursor/User/globalStorage/state.vscdb 
 
 
-## Option 1 - I/O-Limit für eine Applikation mit systemd user service (recommended)
+
+## Option 0
+
+
+
+
+
+
+
+## Option 1 - I/O-Limit für eine Applikation mit systemd user service
 
 <details><summary>Click to expand..</summary>
 
@@ -174,11 +185,14 @@ systemctl --user stop cursor-throttled.service
 
 
 
+
+
 </details>
+
 
 <br><br>
 
-## Option 2 - ionice (recommended)
+## Option 2 - ionice
 - Auf Windows hatte ich zwar nicht die Probleme, aber auf Linux hatte ich sehr stark die Probleme, dass mein Cursor immer eingefroren ist. Das hatte mit der I.O.-Benutzung zu tun und konnte drastisch reduziert werden, indem ich ein eigenes Shortcut erstellt habe, welches die Priorität gesenkt hat. Die äquivalenten Vorgehensweisen könnte man natürlich dann auch auf anderen Betriebssystemen machen.
 ```
 #!/usr/bin/env xdg-open
