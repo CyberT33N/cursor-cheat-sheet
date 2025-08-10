@@ -4,7 +4,53 @@
 
 
 
-## Option 0 - Replace with RAM write
+
+
+## Option 1 - Replace with RAM write
+
+
+<details><summary>Click to expand..</summary>
+
+```
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+CURSOR_BIN="/home/yourUserName/Applications/cursor/squashfs-root/usr/bin/cursor"
+SHM="/dev/shm/cursor-user-data"
+PERSIST="/home/yourUserName/.local/share/cursor_user_data_persist"
+
+mkdir -p "$SHM" "$PERSIST"
+
+# Initiale Daten (optional) aus Persistenz in RAM
+rsync -a --delete "$PERSIST"/ "$SHM"/ 2>/dev/null || true
+
+# Beim Exit zurück auf Disk persistieren (entfernen, wenn komplett flüchtig gewünscht)
+trap 'rsync -a --delete "$SHM"/ "$PERSIST"/' EXIT
+
+exec ionice -c3 nice -n 19 "$CURSOR_BIN" --user-data-dir "$SHM" "$@"
+```
+
+</details>
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+## Option 2 - Replace with RAM write - Fuse Overlay (Not working)
+
+
+<details><summary>Click to expand..</summary>
+
+
 ```bash
 #!/bin/bash
 
@@ -99,13 +145,62 @@ Type=Application
 Categories=Development;TextEditor;
 ```
 
+Remove fuse overlay:
+```
+ # 1) Cursor & evtl. fuse-overlayfs stoppen
+sudo pkill -9 cursor || true
+sudo pkill -9 -f fuse-overlayfs || true
+
+# 2) FUSE-Mount aushängen (nutzerseitig, dann notfalls root)
+fusermount -uz /home/yourUserName/.config/Cursor/User/globalStorage-fused 2>/dev/null || true
+fusermount3 -uz /home/yourUserName/.config/Cursor/User/globalStorage-fused 2>/dev/null || true
+sudo umount -l /home/yourUserName/.config/Cursor/User/globalStorage-fused 2>/dev/null || true
+
+# 3) Falls globalStorage ein Symlink ist → löschen
+if [ -L /home/yourUserName/.config/Cursor/User/globalStorage ]; then
+  rm -f /home/yourUserName/.config/Cursor/User/globalStorage
+fi
+
+# 4) Original-Ordner wiederherstellen (falls vom Script umbenannt)
+#   Wir prüfen typische Namen; erster Treffer wird zurückbenannt
+for cand in globalStorage-real globalStorage_real globalStorage.orig globalStorage.bak; do
+  if [ -d "/home/yourUserName/.config/Cursor/User/$cand" ]; then
+    mv -T "/home/yourUserName/.config/Cursor/User/$cand" "/home/yourUserName/.config/Cursor/User/globalStorage"
+    break
+  fi
+done
+
+# 5) Falls kein Original existiert → neu anlegen
+mkdir -p /home/yourUserName/.config/Cursor/User/globalStorage
+
+# 6) Optional: Overlay-Daten retten, falls DB fehlt
+if [ -f /home/yourUserName/.local/share/cursor_overlay_upper/state.vscdb ] && [ ! -f /home/yourUserName/.config/Cursor/User/globalStorage/state.vscdb ]; then
+  cp /home/yourUserName/.local/share/cursor_overlay_upper/state.vscdb /home/yourUserName/.config/Cursor/User/globalStorage/state.vscdb
+fi
+
+# 7) Overlay-Verzeichnisse wirklich entfernen
+rm -rf /home/yourUserName/.config/Cursor/User/globalStorage-fused \
+       /home/yourUserName/.local/share/cursor_overlay_upper \
+       /home/yourUserName/.local/share/cursor_overlay_work
+
+# 8) Ownerships reparieren
+sudo chown -R yourUserName:yourUserName /home/yourUserName/.config/Cursor /home/yourUserName/.local/share
+
+# 9) Verifizieren
+ls -ld /home/yourUserName/.config/Cursor/User/globalStorage
+stat -c '%U:%G %A' /home/yourUserName/.config/Cursor/User/globalStorage
+```
+
+</details>
+
+
 
 <br><br>
 
 
 
 
-## Option 1 - I/O-Limit für eine Applikation mit systemd user service
+## Option 3 - I/O-Limit für eine Applikation mit systemd user service
 
 <details><summary>Click to expand..</summary>
 
@@ -285,7 +380,7 @@ systemctl --user stop cursor-throttled.service
 
 <br><br>
 
-## Option 2 - ionice
+## Option 3 - ionice
 - Auf Windows hatte ich zwar nicht die Probleme, aber auf Linux hatte ich sehr stark die Probleme, dass mein Cursor immer eingefroren ist. Das hatte mit der I.O.-Benutzung zu tun und konnte drastisch reduziert werden, indem ich ein eigenes Shortcut erstellt habe, welches die Priorität gesenkt hat. Die äquivalenten Vorgehensweisen könnte man natürlich dann auch auf anderen Betriebssystemen machen.
 ```
 #!/usr/bin/env xdg-open
@@ -304,7 +399,7 @@ Categories=Development;TextEditor;
 
 
 
-## Option 3 (Not verified)
+## Option 4 (Not verified)
 - Es **MUSS** auf jeden Fall an einer zu großen **HISTORY** liegen. **FÜHRE AUS**, die ganze **HISTORY** von einem **PROJEKT** zu löschen.
 
 
