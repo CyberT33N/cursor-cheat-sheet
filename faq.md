@@ -15,19 +15,42 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-CURSOR_BIN="/home/yourUserName/Applications/cursor/squashfs-root/usr/bin/cursor"
-SHM="/dev/shm/cursor-user-data"
-PERSIST="/home/yourUserName/.local/share/cursor_user_data_persist"
+CURSOR_BIN="$HOME/Applications/cursor/squashfs-root/usr/bin/cursor"
 
-mkdir -p "$SHM" "$PERSIST"
+# Alle relevanten Cursor-Ordner ermitteln
+PERSIST="$HOME/.local/share/cursor_persist"
+RAMDIR="/dev/shm/cursor_data"
 
-# Initiale Daten (optional) aus Persistenz in RAM
-rsync -a --delete "$PERSIST"/ "$SHM"/ 2>/dev/null || true
+mkdir -p "$PERSIST" "$RAMDIR"
 
-# Beim Exit zurück auf Disk persistieren (entfernen, wenn komplett flüchtig gewünscht)
-trap 'rsync -a --delete "$SHM"/ "$PERSIST"/' EXIT
+# Falls noch keine persistente Datenbasis existiert → aktuelle übernehmen
+if [ ! -d "$PERSIST/config" ]; then
+    echo "[*] Erste Einrichtung – kopiere aktuelle Cursor-Daten..."
+    mkdir -p "$PERSIST/config"
+    rsync -a "$HOME/.config/Cursor/" "$PERSIST/config/"
+fi
 
-exec ionice -c3 nice -n 19 "$CURSOR_BIN" --user-data-dir "$SHM" "$@"
+# Restore persistente Daten in RAM
+echo "[*] Lade Daten aus Persistenz in RAM..."
+rsync -a --delete "$PERSIST/" "$RAMDIR/"
+
+# Symlinks setzen, damit Cursor ins RAM schreibt
+rm -rf "$HOME/.config/Cursor"
+ln -s "$RAMDIR/config" "$HOME/.config/Cursor"
+
+# Hintergrundsync alle 30s
+(
+  while sleep 30; do
+    rsync -a --delete "$RAMDIR/" "$PERSIST/"
+  done
+) &
+
+# Finaler Sync bei Exit
+trap 'echo "[*] Sync beim Beenden..."; rsync -a --delete "$RAMDIR/" "$PERSIST/"' EXIT
+
+# Start
+exec "$CURSOR_BIN" "$@"
+
 ```
 
 </details>
