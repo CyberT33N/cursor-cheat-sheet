@@ -3,7 +3,42 @@
   - ~/.config/Cursor/User/globalStorage/state.vscdb 
 
 
+## Untested
 
+
+<details><summary>Click to expand..</summary>
+
+Option 1
+
+```
+Hi everyone,
+
+I've been subscribed to this issue for days and wanted to express my sincere gratitude to the issue author and everyone contributing. Cursor's UI freezes on Linux have been utterly insufferable, and it's an immense relief to see efforts to diagnose and mitigate this problem.
+
+While I'm not a traditional developer by trade (I just "vibe code" as they say! 😄), I've managed to follow this conversation closely. Although I understood about 95% of the discussion, leveraging an AI greatly helped me grasp the remaining technical details of the underlying problem and proposed solutions.
+
+Personally, I've opted for a more system-level and "hardcore" solution using anything-sync-daemon (asd) (https://github.com/graysky2/anything-sync-daemon) to manage my ~/.config/Cursor/User/globalStorage directory.
+
+Our approach, which requires no custom scripting beyond a simple daemon configuration, involves:
+
+    Full RAM-based operations: The globalStorage directory (including state.vscdb) is entirely redirected to a tmpfs (/dev/shm). This allows Cursor to read and write directly to RAM, delivering maximum I/O performance and virtually eliminating disk-related UI freezes.
+    Robust disk persistence: anything-sync-daemon automatically and reliably synchronizes these RAM-based data to a persistent backup directory on disk (~/.config/Cursor/User/.globalStorage-backup_asd) upon system startup and shutdown, and handles crash recovery.
+
+I consider this more optimized than simple I/O prioritization or custom script-based workarounds, as it leverages a mature, dedicated daemon to place the I/O hotspot directly on the fastest available medium (RAM), while ensuring complete data persistence.
+
+I've implemented this on my Arch Linux system, and the results are instantaneous: the IDE is incredibly fluid and responsive again, even with large projects.
+
+Huge thanks again to everyone for your hard work on this issue. I hope this helps other Linux users while awaiting an official fix from the Cursor team.
+```
+
+</details>
+
+
+
+
+
+<br><br>
+<br><br>
 
 
 ## Option 1 - Replace with RAM write
