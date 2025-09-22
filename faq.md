@@ -1,3 +1,15 @@
+
+# Allowlist
+
+## Whitelist not working
+- Wenn die Whitelist nicht funktioniert, **MUSS** man einmal in, also rechts im Chatfenster, wenn man auswählen **MUSS** mit der Allowlist und Run Everything, **MUSS** man einmal Run Everything auswählen und dann in den Einstellungen auch die MCP Protection deaktivieren, dass es einmal so durchläuft. Und danach beim nächsten Comment im Chat **MUSS** man es einfach wieder auf Allowlist setzen. Durch diesen Transitionwechsel wird es dann erlaubt.
+
+
+
+
+
+
+
 # Freezing problems
 - Also, mit sehr hoher Wahrscheinlichkeit liegt es an den Schreibzugriffen in die lokale SQLite 3-Datenbank https://forum.cursor.com/t/frequent-freezes-in-cursor-ai-ide-any-solutions/13810/25?u=cybert33n
   - ~/.config/Cursor/User/globalStorage/state.vscdb 
