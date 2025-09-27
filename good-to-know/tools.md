@@ -1,34 +1,20 @@
 # Tools
-- https://docs.cursor.com/chat/tools
-- Hier ist eine vollständige Liste aller Tools, die mir zur Verfügung stehen:
+- https://docs.cursor.com/chat/tools  
+- Vollständige Liste aller verfügbaren Tools mit aktualisierten RPC-Aufrufen:
 
 
+---
 
-Cursor will call their internal tools like this:
-```
-Tool Name: default_api.read_file
-```
+## Orchestrierung
 
-You can call mcp server tools like this:
-```
-default_api.read_files ["temp\index.ts"]
-```
+- **multi_tool_use.parallel** – Mehrere unabhängige Tool-Aufrufe parallel ausführen.
 
 
+---
 
+## Datei- und Code-Operationen
 
-
-
-## Dateisystem & Codebase-Tools
-
-### **codebase_search** - Semantische Suche im Code nach relevanten Snippets
-
-
-
-<br><br>
-
-
-### **read_file** - Lesen von Dateiinhalten mit anpassbarem Bereich
+### **functions.read_file** – Lesen von Dateiinhalten (mit anpassbarem Bereich)
 
 <details><summary>Click to expand..</summary>
 
@@ -38,16 +24,10 @@ Read the contents of a file within your codebase.
 — Up to 250 lines in other modes
 ```
 
-
-Absolut! Hier sind die detaillierten Aufrufe für das `read_file`-Tool, die ich gerade verwendet habe, um die Datei `./.ai/rules/shared-rules/core/core-rules/base.md` iterativ zu lesen, nachdem der erste Aufruf gezeigt hat, dass sie mehr als 250 Zeilen hat (insgesamt 389):
-
-**1. Aufruf (Lesen des ersten Blocks):**
-
-
-Die Information über die Gesamtanzahl der Zeilen war Teil der Antwort, die ich vom ersten read_file-Aufruf (dem für die Zeilen 1-250) erhalten habe.
+**Beispiel: iteratives Lesen einer großen Datei**
 
 ```markdown
-Tool: `read_file`
+Tool: functions.read_file
 Parameter:
   target_file: "./.ai/rules/shared-rules/core/core-rules/base.md"
   start_line_one_indexed: 1
@@ -55,67 +35,68 @@ Parameter:
   should_read_entire_file: false
   explanation: "Reading the first chunk (1-250) of base.md for iterative full content retrieval."
 ```
-*(Die Antwort dieses Aufrufs enthielt die Information "total 389 lines", was den nächsten Schritt auslöste.)*
 
-**2. Aufruf (Lesen des verbleibenden Blocks):**
+Antwort enthält die Gesamtanzahl der Zeilen → nächster Aufruf:
 
 ```markdown
-Tool: `read_file`
+Tool: functions.read_file
 Parameter:
   target_file: "./.ai/rules/shared-rules/core/core-rules/base.md"
   start_line_one_indexed: 251
-  end_line_one_indexed_inclusive: 389  # Ende auf die Gesamtzeilenzahl gesetzt
+  end_line_one_indexed_inclusive: 389
   should_read_entire_file: false
-  explanation: "Reading the second and final chunk (251-389) of base.md for iterative full content retrieval."
+  explanation: "Reading the final chunk (251-389) of base.md for iterative full content retrieval."
 ```
-
-Diese beiden Aufrufe ermöglichen es, den gesamten Inhalt auch von größeren Dateien zu erfassen, indem die Leseoperation in Blöcke aufgeteilt wird.
-
-
-
-
-
 
 </details>
 
+---
 
+- **functions.edit_file** – Bestehende Datei partiell ändern oder neue Datei erstellen.  
+- **functions.search_replace** – Einzigartig identifizierte Textstelle in einer Datei ersetzen.  
+- **functions.delete_file** – Datei löschen.  
+- **functions.reapply** – Letzte Edit-Anweisung erneut anwenden (falls fehlerhaft umgesetzt).  
+- **functions.list_dir** – Verzeichnisinhalt auflisten.  
+- **functions.grep** – Schnelle Code-/Textsuche (Regex, ripgrep).  
+- **functions.edit_notebook** – Jupyter-Notebook-Zellen gezielt ändern oder erstellen.  
 
-
-
-
-
-
-
-
-
-<br><br>
-
-
-  
-- **list_dir** - Auflisten des Inhalts eines Verzeichnisses
-- **file_search** - Fuzzy-Suche nach Dateien anhand von Teilen des Pfades
-- **edit_file** - Vorschlagen und Anwenden von Änderungen an Dateien
-- **delete_file** - Löschen einer Datei
-- **reapply** - Erneutes Anwenden der letzten Bearbeitung mit einem intelligenteren Modell
-- **grep_search** - Textbasierte Regex-Suche in Dateien
+---
 
 ## Ausführungstools
-- **run_terminal_cmd** - Ausführen von Terminal-Befehlen
 
-## Chat/Composer
-- **user_query** - Benutzer Text in Chat Box
+- **functions.run_terminal_cmd** – Shell-Befehl ausführen (non-interaktiv empfohlen).  
+
+---
+
+## Web & Recherche
+
+- **functions.web_search** – Websuche für aktuelle Informationen.  
+
+---
+
+## Chat / Composer
+
+- **user_query** – Benutzertext in die Chatbox einfügen.  
+
+---
 
 ## Regeln & Kontext
-- **fetch_rules** - Abrufen von nutzerspezifischen Regeln
-```
-print(default_api.fetch_rules(
+
+- **functions.fetch_rules** – Abrufen nutzerspezifischer Regeln.  
+
+**Beispiel:**
+
+```python
+print(functions.fetch_rules(
     rule_names = [
         ".ai/rules/shared-rules/core/global-rules/emoji-communication.mdc",
         ".ai/rules/custom-rules/database-rules/evident-reference-documentation-always.mdc"
-        # Füge hier weitere Regelpfade hinzu, falls benötigt
     ]
 ))
 ```
 
-## Web & Recherche
-- **web_search** - Suche im Web nach Echtzeit-Informationen
+---
+
+## Codebase-Suche
+
+- **codebase_search** – Semantische Suche im Code nach relevanten Snippets.  
