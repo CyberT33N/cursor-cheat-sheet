@@ -68,6 +68,26 @@ Parameter:
 
 ---
 
+## Linting
+
+- **`read_lints`**:  
+  - **`paths?: string[]`** – optional; Liste von Dateien/Ordnern, für die Linter-Errors abgefragt werden.  
+    - Wenn gesetzt → nur diese Pfade.  
+    - Wenn weggelassen → gesamter Workspace.
+
+Ich habe es so aufgerufen:
+
+```json
+{
+  "paths": [
+    "c:\\git\\test\\eslint.config.ts"
+  ]
+}
+```
+
+Weitere Filter- oder Options-Parameter gibt es bei diesem Tool nicht.
+---
+
 ## Web & Recherche
 
 - **functions.web_search** – Websuche für aktuelle Informationen.  
