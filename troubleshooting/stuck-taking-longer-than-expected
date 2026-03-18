@@ -1,0 +1,19 @@
+https://forum.cursor.com/t/cursor-stuck-on-taking-longer-than-expected/155099/4
+
+
+Hey, thanks for the detailed report.
+
+This is a known issue we’re actively tracking. In short, the “Taking longer than expected” message shows up when the client doesn’t get a server response within the timeout around 15 seconds. There can be different causes, from network issues to server delays.
+
+A few things to try:
+
+    Network diagnostics: Cursor Settings > Network > Run Diagnostics, then send a screenshot of the results.
+    Disable HTTP/2: in settings.json add "cursor.general.disableHttp2": true, then restart Cursor.
+    Re-index: Cursor Settings > Indexing > Resync Index. This fully fixed it for some users.
+    Empty folder test: File > Open Folder > empty directory, start a new chat, type “hello”. If that works, the issue might be tied to a specific project or index.
+
+About pricing and credit boosts, we can’t handle billing on the forum. Please contact support directly at hi@cursor.com
+
+Related thread with more community fixes: Taking longer than expected
+
+Let me know how it goes with the steps above.
