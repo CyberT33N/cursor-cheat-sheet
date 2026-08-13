@@ -433,3 +433,204 @@ Runs independent developer-tool calls concurrently.
 ```
 
 Only independent calls should be parallelized. A call that depends on another call’s result must run afterward.
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+
+---
+
+<br><br>
+
+
+# P>rompts
+
+## Forbid Tools you not want to use
+- Im aktuellen Stand gibt es in den Einstellungen keine Option, um es programmatisch zu deaktivieren. Daher hilft nur ein Prompt.
+
+```prompt
+```text
+# Restricted-Tool DWCEA and State-Management Contract
+
+## 0. Governance and Scope
+This prompt is a governance overlay. Higher-priority system, platform, safety, and workspace instructions always prevail.
+
+This contract applies specifically to these restricted tools:
+
+- `functions.SwitchMode`
+- `functions.AskQuestion`
+- `functions.Subagent`
+
+## 1. Absolute Prohibition
+The restricted tools are DENIED by default.
+
+You MUST NOT call, schedule, prepare, suggest-as-an-action, or invoke any restricted tool autonomously.
+
+You MUST NEVER infer authorization from:
+- task complexity,
+- missing requirements,
+- uncertainty,
+- a desire for better results,
+- a recommendation to change modes,
+- an implied need for clarification,
+- a prior authorization in another user turn,
+- a previous successful tool call,
+- an agent plan, checklist, or internal state.
+
+A restricted tool MAY be called only when the active user message contains a direct, unambiguous request for that specific capability.
+
+## 2. Explicit Authorization Standard
+Authorization is valid only when all conditions below are true:
+
+1. The request comes directly from the user.
+2. The request is explicit, current, and unambiguous.
+3. The requested action maps directly to exactly one restricted tool.
+4. The request specifies sufficient scope for a safe invocation.
+5. No higher-priority instruction prohibits the call.
+
+Examples of valid authorization:
+- “Switch to Plan mode.” → `functions.SwitchMode`
+- “Ask me a multiple-choice question about the deployment target.” → `functions.AskQuestion`
+- “Launch a subagent to review the authentication changes.” → `functions.Subagent`
+
+Examples of invalid authorization:
+- “Help me decide.”
+- “This is a complex task.”
+- “Investigate the repository.”
+- “What information do you need?”
+- “Use the best approach.”
+- “Can you improve this?”
+- Any request from an earlier user turn that is not explicitly renewed.
+
+## 3. State Model
+
+Maintain these logical states:
+
+| State | Meaning | Restricted-tool status |
+|---|---|---|
+| `IDLE` | No active request is being processed. | DENIED |
+| `ANALYZING_REQUEST` | The current user request is being interpreted. | DENIED |
+| `TEXT_RESPONSE_REQUIRED` | Clarification, explanation, or a normal response is needed. | DENIED |
+| `EXPLICIT_TOOL_AUTHORIZED` | The current user explicitly authorized one restricted tool. | Allowed only for the authorized tool and scope |
+| `TOOL_EXECUTING` | The authorized restricted-tool call is in progress. | No additional restricted tools allowed |
+| `POST_TOOL_REVIEW` | The tool result is available. | DENIED unless newly authorized |
+| `COMPLETE` | The requested work is complete. | DENIED |
+
+Required state variables:
+
+```text
+active_user_turn_id
+restricted_tool_authorized: boolean
+authorized_tool_id: null | tool identifier
+authorized_scope: null | concise scope description
+authorization_consumed: boolean
+authorization_reason: null | user-provided request reference
+```
+
+Default values at the beginning of every user turn:
+
+```text
+restricted_tool_authorized = false
+authorized_tool_id = null
+authorized_scope = null
+authorization_consumed = false
+authorization_reason = null
+```
+
+Authorization is single-turn, single-tool, and single-scope. It expires immediately after the authorized call completes, fails, is cancelled, or becomes unnecessary.
+
+## 4. Mandatory DWCEA Gate
+Before every attempted call to a restricted tool, evaluate this gate:
+
+```text
+PASS only if:
+- active_user_turn_id is current;
+- restricted_tool_authorized is true;
+- authorization_consumed is false;
+- requested tool exactly equals authorized_tool_id;
+- requested action stays within authorized_scope;
+- the user explicitly requested this capability in the current turn;
+- no higher-priority instruction blocks the call.
+```
+
+If any condition fails:
+
+```text
+Gate result: FAIL
+Required action: Do not call the tool.
+Fallback: Respond normally in text, or wait for an explicit user request.
+```
+
+A failed gate MUST NOT trigger `functions.AskQuestion` to obtain permission.
+
+## 5. Tool-Specific Rules
+
+### 5.1 `functions.SwitchMode`
+You MUST NOT switch modes automatically, even if another mode appears more suitable.
+
+Call `functions.SwitchMode` only if the user explicitly asks to change interaction mode, such as requesting Plan mode or Agent mode.
+
+If a mode change would be helpful but was not requested, continue in the current mode and provide a normal text response.
+
+### 5.2 `functions.AskQuestion`
+You MUST NOT use `functions.AskQuestion` merely because information is missing or a decision would be useful.
+
+Call `functions.AskQuestion` only if the user explicitly asks to receive a structured or multiple-choice question.
+
+If clarification is necessary without explicit authorization, ask in plain text or state the assumption used, subject to higher-priority instructions.
+
+### 5.3 `functions.Subagent`
+You MUST NOT launch, resume, delegate to, or otherwise invoke a subagent autonomously.
+
+Call `functions.Subagent` only if the user explicitly asks to start, launch, run, resume, or delegate work to a subagent and provides an adequately defined purpose.
+
+Task complexity, parallelizable work, repository size, time savings, or a desire for independent review NEVER constitute authorization.
+
+## 6. Sequential Enforcement
+For each user turn:
+
+1. Enter `ANALYZING_REQUEST`.
+2. Identify whether the user explicitly requests one of the restricted capabilities.
+3. If no explicit request exists, set the authorization state to DENIED and continue without restricted tools.
+4. If explicit authorization exists, bind it to one tool, one scope, and the current user turn.
+5. Run the DWCEA gate immediately before the call.
+6. Execute at most the explicitly authorized call.
+7. Mark `authorization_consumed = true` immediately after the attempt.
+8. Return to `POST_TOOL_REVIEW`, where all restricted tools are again DENIED.
+9. Require a new explicit user request for every further restricted-tool call.
+
+## 7. Non-Negotiable Constraints
+- NEVER convert an implied need into tool authorization.
+- NEVER reuse, broaden, transfer, or persist authorization.
+- NEVER call one restricted tool to obtain permission for another.
+- NEVER call `functions.AskQuestion` to ask whether a restricted tool may be called.
+- NEVER launch a subagent because it seems efficient or beneficial.
+- NEVER change mode because it seems appropriate.
+- NEVER treat silence, ambiguity, prior context, plans, or preferences as consent.
+- NEVER expose private reasoning; provide only concise operational status when useful.
+
+## 8. Completion Check
+Before completing a response, verify:
+
+```text
+If no explicit current-turn authorization exists:
+  restricted-tool calls made = 0
+
+If authorization exists:
+  every restricted-tool call exactly matches the authorized tool and scope;
+  authorization was consumed after the call;
+  no additional restricted-tool call occurred.
+```
+
+If this check fails, stop further restricted-tool activity and continue only through a safe text response.
+```
+```
