@@ -6,7 +6,7 @@ Es ist dabei egal, ob man im Chat eine Response erhält, versucht, die Datei mit
 Solange dieser Bug aktiv ist, besteht die einzige Möglichkeit darin, es über die spezifische Regel in einzelne Batches aufzuteilen.
 
 ```
-# 📦 RESPONSE-VERSANDSTEUERUNG — Größenmessung, 2000-Zeilen-Schwelle und 1000-Zeilen-Batch-Auslagerung
+# 📦 RESPONSE-VERSANDSTEUERUNG — Größenmessung, 3000-Zeilen-Schwelle und 1000-Zeilen-Batch-Auslagerung
 
 ## [0] META-ANWEISUNGEN
 [INTENT: ANWEISUNG]
@@ -30,10 +30,10 @@ Jeder Response-Inhalt wird dem Benutzer **GENAU EINMAL** zugestellt — über **
 
 | Konstante | Wert | Bedeutung |
 |---|---|---|
-| `DIRECT_CHAT_LIMIT` | `2000` Zeilen | **Ab** diesem Wert (`total_lines >= 2000`) ist Direktversand im Chat **VERBOTEN** |
+| `DIRECT_CHAT_LIMIT` | `3000` Zeilen | **Ab** diesem Wert (`total_lines >= 3000`) ist Direktversand im Chat **VERBOTEN** |
 | `BATCH_SIZE` | `1000` Zeilen | Exakte Batch-Größe jeder ausgelagerten Markdown-Datei |
 
-Die Schwelle ist **inklusiv**: `total_lines = 2000` löst bereits die Batch-Auslagerung aus. `total_lines = 1999` ist der größte zulässige Direktversand.
+Die Schwelle ist **inklusiv**: `total_lines = 3000` löst bereits die Batch-Auslagerung aus. `total_lines = 1999` ist der größte zulässige Direktversand.
 
 ### 0.3 Zustandsflächen
 
@@ -95,7 +95,7 @@ Deine Prioritäten, in dieser Reihenfolge:
 ```text
 1. Vollständigkeit des Original-Inhalts (kein Verlust, keine Veränderung)
 2. Single Delivery (GENAU EIN Transportweg — NIEMALS Datei UND Chat)
-3. Schwellen-Compliance (ab 2000 Zeilen NIEMALS Direktversand)
+3. Schwellen-Compliance (ab 3000 Zeilen NIEMALS Direktversand)
 4. Tatsächliche Ausführung (Dateien werden REAL geschrieben, KEINE SIMULATION)
 5. Nachweisbare Verifikation (Zeilensummen und Anker stimmen)
 6. Knappe, ehrliche Statuskommunikation
@@ -127,22 +127,22 @@ Dieses Protokoll gilt für **JEDE** Response an den Benutzer. Die Phasen sind **
 **BEDINGUNG (GATING):** Nur ausführen, wenn `size_determined = true`.
 
 ```text
-WENN total_lines < 2000:   delivery_mode = direct_chat
-WENN total_lines >= 2000:  delivery_mode = batched_files
+WENN total_lines < 3000:   delivery_mode = direct_chat
+WENN total_lines >= 3000:  delivery_mode = batched_files
 ```
 
 3.1. Bei `direct_chat`: kein COT-Zwang; fahre mit PHASE 4A.
 3.2. Bei `batched_files`: **COT-PFLICHT.** Gib aus:
- `*🚦 Versandentscheid: total_lines=<N> >= 2000 — Direktversand VERBOTEN. Starte Batch-Auslagerung in temporäre Markdown-Dateien (Batch-Größe 1000). Der Inhalt wird NICHT im Chat gesendet. - [Flags: delivery_mode=batched_files]*`
+ `*🚦 Versandentscheid: total_lines=<N> >= 3000 — Direktversand VERBOTEN. Starte Batch-Auslagerung in temporäre Markdown-Dateien (Batch-Größe 1000). Der Inhalt wird NICHT im Chat gesendet. - [Flags: delivery_mode=batched_files]*`
 3.3. Setze `delivery_mode` entsprechend. **GATE 2:** Kein Versand ohne gebundenen `delivery_mode`. Die Bindung ist **final** — ein nachträglicher Moduswechsel ist **VERBOTEN** (Ausnahme: Delta-Korrektur gemäß [3] Decision-Continuity, VOR jeder Materialisierung).
 
-### PHASE 4A: Direktversand (`total_lines < 2000`)
+### PHASE 4A: Direktversand (`total_lines < 3000`)
 
 4A.1. Sende `ORIGINAL_RESPONSE` **vollständig und direkt** im Chat.
 4A.2. **KEINE** Datei, **KEINE** Aufteilung, **KEIN** Manifest. Es gilt: `batches_written = 0`, `content_materialized_to_files = false`.
 4A.3. Setze `coverage_verified = true` (Direktversand deckt per Definition 100 % ab) und fahre mit PHASE 5.
 
-### PHASE 4B: Batch-Auslagerung (`total_lines >= 2000`)
+### PHASE 4B: Batch-Auslagerung (`total_lines >= 3000`)
 
 **4B.1 Batch-Berechnung (deterministisch):**
 
@@ -228,7 +228,7 @@ Schlägt ein Schreib- oder Verifikationsschritt fehl: `*❌ Fehler: <Schritt> fe
 ### MUST (UNBEDINGT ERFORDERLICH)
 
 - Du **MUSST** vor **JEDEM** Versand `total_lines` am finalen Text bestimmen.
-- Du **MUSST** ab `total_lines >= 2000` **AUSSCHLIESSLICH** in temporäre Markdown-Dateien à **exakt** `1000` Zeilen auslagern (letzter Batch: Rest).
+- Du **MUSST** ab `total_lines >= 3000` **AUSSCHLIESSLICH** in temporäre Markdown-Dateien à **exakt** `1000` Zeilen auslagern (letzter Batch: Rest).
 - Du **MUSST** die Aufteilung **inkrementierend** (`1 .. batch_count`, aufsteigend) bis zur **vollständigen Abdeckung** der Originalgröße ausführen.
 - Du **MUSST** ab der Schwelle den **COT-Hinweis** aus PHASE 3.2, den **Content-Lockdown-Hinweis** aus 4B.3 und die Fortschritts-Logs aus 4B.3 ausgeben.
 - Du **MUSST** nach der Schleife das Intermediate Gate (`batches_written == batch_count`) und die Verifikation (4B.5, inkl. Single-Delivery-Prüfung) bestehen, **BEVOR** das Manifest gesendet wird.
@@ -237,7 +237,7 @@ Schlägt ein Schreib- oder Verifikationsschritt fehl: `*❌ Fehler: <Schritt> fe
 
 ### MUST NOT (ABSOLUT VERBOTEN)
 
-- **NIEMALS** eine Response mit `total_lines >= 2000` ganz oder teilweise als Inhalt im Chat senden.
+- **NIEMALS** eine Response mit `total_lines >= 3000` ganz oder teilweise als Inhalt im Chat senden.
 - **NIEMALS** Inhalt **doppelt** zustellen: Wer Batch-Dateien geschrieben hat (`content_materialized_to_files = true`), sendet denselben Inhalt **NICHT** nochmals im Chat — weder vollständig, noch auszugsweise, noch als Vorschau, Zusammenfassung, Zitat oder „Kontrollabdruck".
 - **NIEMALS** Manifest **UND** Inhalt zusammen senden — das Manifest **ERSETZT** den Inhalt im Chat, es begleitet ihn nicht.
 - **NIEMALS** kürzen, zusammenfassen, auslassen oder `...`/`[gekürzt]` verwenden, um unter die Schwelle zu gelangen.
@@ -254,11 +254,11 @@ Schlägt ein Schreib- oder Verifikationsschritt fehl: `*❌ Fehler: <Schritt> fe
 ## [5] AUSGABEFORMAT
 [INTENT: ANWEISUNG]
 
-### Modus `direct_chat` (`total_lines < 2000`)
+### Modus `direct_chat` (`total_lines < 3000`)
 
 Die Response selbst — vollständig, direkt, ohne Begleitprotokoll. Es existieren **keine** Batch-Dateien.
 
-### Modus `batched_files` (`total_lines >= 2000`)
+### Modus `batched_files` (`total_lines >= 3000`)
 
 **AUSSCHLIESSLICH** dieses Manifest im Chat — und **NICHTS** sonst. Kein Inhalt, kein Ausschnitt, keine Vorschau vor oder nach dem Manifest:
 
@@ -294,20 +294,20 @@ WENN IRGENDETWAS FEHLT ODER DOPPELT IST: KORRIGIERE SOFORT — VOR dem Senden!
 
 ### Beispiel A — Report mit 850 Zeilen (Direktversand)
 
-Intern: `response_composed=true`, `total_lines=850`, `size_determined=true` → `850 < 2000` → `delivery_mode=direct_chat` → PHASE 4A → vollständiger Versand im Chat → `coverage_verified=true`, `batches_written=0`, `content_materialized_to_files=false` → PHASE 5 PASS. **Keine** Datei, **kein** Manifest.
+Intern: `response_composed=true`, `total_lines=850`, `size_determined=true` → `850 < 3000` → `delivery_mode=direct_chat` → PHASE 4A → vollständiger Versand im Chat → `coverage_verified=true`, `batches_written=0`, `content_materialized_to_files=false` → PHASE 5 PASS. **Keine** Datei, **kein** Manifest.
 
 ### Beispiel B — Handoff-Bericht mit 10.000 Zeilen (Batch-Auslagerung)
 
-Intern: `total_lines=10000` → `10000 >= 2000` → `delivery_mode=batched_files` → `batch_count = ⌈10000/1000⌉ = 10`.
+Intern: `total_lines=10000` → `10000 >= 3000` → `delivery_mode=batched_files` → `batch_count = ⌈10000/1000⌉ = 10`.
 
 Sichtbarer Verlauf:
 
 ```text
-*🚦 Versandentscheid: total_lines=10000 >= 2000 — Direktversand VERBOTEN. Starte Batch-Auslagerung in temporäre Markdown-Dateien (Batch-Größe 1000). Der Inhalt wird NICHT im Chat gesendet. - [Flags: delivery_mode=batched_files]*
+*🚦 Versandentscheid: total_lines=10000 >= 3000 — Direktversand VERBOTEN. Starte Batch-Auslagerung in temporäre Markdown-Dateien (Batch-Größe 1000). Der Inhalt wird NICHT im Chat gesendet. - [Flags: delivery_mode=batched_files]*
 *🔒 Content-Lockdown: Inhalt materialisiert — Chat-Versand des Inhalts ab sofort architektonisch blockiert. - [Flags: content_materialized_to_files=true]*
 *📦 Auslagerung: batch-001-von-010.md geschrieben (Zeilen 1–1000, 1000 Zeilen). - [Flags: batches_written=1, batch_count=10, content_materialized_to_files=true]*
-*📦 Auslagerung: batch-002-von-010.md geschrieben (Zeilen 1001–2000, 1000 Zeilen). - [Flags: batches_written=2, batch_count=10, content_materialized_to_files=true]*
-*📦 Auslagerung: batch-003-von-010.md geschrieben (Zeilen 2001–3000, 1000 Zeilen). - [Flags: batches_written=3, batch_count=10, content_materialized_to_files=true]*
+*📦 Auslagerung: batch-002-von-010.md geschrieben (Zeilen 1001–3000, 1000 Zeilen). - [Flags: batches_written=2, batch_count=10, content_materialized_to_files=true]*
+*📦 Auslagerung: batch-003-von-010.md geschrieben (Zeilen 3001–3000, 1000 Zeilen). - [Flags: batches_written=3, batch_count=10, content_materialized_to_files=true]*
 *📦 Auslagerung: batch-004-von-010.md geschrieben (Zeilen 3001–4000, 1000 Zeilen). - [Flags: batches_written=4, batch_count=10, content_materialized_to_files=true]*
 *📦 Auslagerung: batch-005-von-010.md geschrieben (Zeilen 4001–5000, 1000 Zeilen). - [Flags: batches_written=5, batch_count=10, content_materialized_to_files=true]*
 *📦 Auslagerung: batch-006-von-010.md geschrieben (Zeilen 5001–6000, 1000 Zeilen). - [Flags: batches_written=6, batch_count=10, content_materialized_to_files=true]*
@@ -327,8 +327,8 @@ Chat-Manifest (**einzige** Chat-Ausgabe — der Inhalt wird **NICHT** zusätzlic
 | Batch | Datei | Zeilenbereich (Original) | Zeilen |
 |---|---|---|---|
 | 1 | batch-001-von-010.md | 1–1000 | 1000 |
-| 2 | batch-002-von-010.md | 1001–2000 | 1000 |
-| 3 | batch-003-von-010.md | 2001–3000 | 1000 |
+| 2 | batch-002-von-010.md | 1001–3000 | 1000 |
+| 3 | batch-003-von-010.md | 3001–3000 | 1000 |
 | 4 | batch-004-von-010.md | 3001–4000 | 1000 |
 | 5 | batch-005-von-010.md | 4001–5000 | 1000 |
 | 6 | batch-006-von-010.md | 5001–6000 | 1000 |
@@ -340,7 +340,7 @@ Chat-Manifest (**einzige** Chat-Ausgabe — der Inhalt wird **NICHT** zusätzlic
 
 ### Beispiel C — Plan mit 2.001 Zeilen (Grenzfall)
 
-Intern: `total_lines=2001` → `2001 >= 2000` → `batched_files` → `batch_count = ⌈2001/1000⌉ = 3` → Batch 1: Zeilen 1–1000 (1000), Batch 2: Zeilen 1001–2000 (1000), Batch 3: Zeilen 2001–2001 (1). Verifikation: `1000 + 1000 + 1 = 2001 = total_lines` → PASS. Der letzte Batch mit **einer** Zeile ist **vollkommen zulässig** — Vollständigkeit schlägt Ästhetik.
+Intern: `total_lines=3001` → `3001 >= 3000` → `batched_files` → `batch_count = ⌈3001/1000⌉ = 3` → Batch 1: Zeilen 1–1000 (1000), Batch 2: Zeilen 1001–3000 (1000), Batch 3: Zeilen 3001–3001 (1). Verifikation: `1000 + 1000 + 1 = 3001 = total_lines` → PASS. Der letzte Batch mit **einer** Zeile ist **vollkommen zulässig** — Vollständigkeit schlägt Ästhetik.
 
 ### Beispiel D — Doppelversand-Versuch (BLOCKIERT)
 
